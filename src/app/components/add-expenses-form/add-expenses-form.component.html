@@ -1,0 +1,61 @@
+<div class="add-expense-form">
+  <form [formGroup]="addExpenseForm">
+    <span>{{ date() }}</span>
+    <div class="form-control">
+      <label>
+        <span>Магазин</span>
+        <select formControlName="shop" type="text">
+          @for (shop of (shopsService.shops | async); track shop.id) {
+          <option [value]="shop.id">{{ shop.title }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <div class="expenses" formArrayName="expenses">
+      <ng-container *ngFor="let i of expenses; let idx = index" [formGroup]="i">
+        @if (idx >= 1) {
+        <button class="remove-button" (click)="removeExpense(idx)">-</button>
+        }
+
+        <div class="form-control">
+          <label сlass="form-control__label">
+            <span>Категорія</span>
+            <select formControlName="categoryId">
+              @for (category of (categoriesService.categories | async); track
+              category.id) {
+              <option [value]="category.id">{{ category.title }}</option>
+              }
+            </select>
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label сlass="form-control__label">
+            <span>Покупка</span>
+            <input
+              placeholder="Хлібчик чи щось..."
+              formControlName="title"
+              type="text"
+            />
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label сlass="form-control__label">
+            <span>Сума</span>
+            <input placeholder="0.0" formControlName="sum" type="text" />
+          </label>
+        </div>
+      </ng-container>
+    </div>
+    <button class="add-button" (click)="addExpense()">+</button>
+    <button
+      [disabled]="addExpenseForm.invalid"
+      class="save-button"
+      (click)="saveForm()"
+    >
+      Зберегти
+    </button>
+  </form>
+</div>

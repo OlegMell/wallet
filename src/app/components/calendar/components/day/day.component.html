@@ -1,0 +1,8 @@
+<div class="calendar__days__day"
+[class.today]="isToday"
+[class.weekend]="isWeekend"
+[class.another-month]="isAnotherMonth"
+(click)="handleClick()"
+>
+  {{ day }}
+</div>

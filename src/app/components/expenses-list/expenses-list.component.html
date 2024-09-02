@@ -1,0 +1,10 @@
+<div class="expenses-list">
+  @if (!expenses().length) {
+  <h3>Немає жодної витрати</h3>
+  } @for (expense of expenses(); track expense.id) {
+  <div class="expenses-list__item">
+    {{ expense.title }}
+    <span class="expenses-list__item__summ">{{ expense.sum }} грн.</span>
+  </div>
+  }
+</div>

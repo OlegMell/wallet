@@ -1,0 +1,25 @@
+<div class="calendar">
+  <div class="calendar__header">
+    <button class="arrow-btn arrow-btn-left" (click)="prevMonth()"></button>
+    <div class="calendar__header__month">
+      {{ currentMonth }} - {{ currentDate.year() }}
+    </div>
+    <button class="arrow-btn arrow-btn-right" (click)="nextMonth()"></button>
+  </div>
+  <div class="calendar__week">
+    @for (w of week; track w) {
+    <div class="calendar__week__title">
+      {{ w }}
+    </div>
+    }
+  </div>
+  <div class="calendar__days">
+    @for (day of days; track day) {
+    <app-day
+      (clicked)="selectDay($event)"
+      [date]="day"
+      [currentDate]="currentDate"
+    />
+    }
+  </div>
+</div>

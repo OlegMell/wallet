@@ -1,0 +1,31 @@
+.expenses-list {
+  width: 400px;
+  border: 1px solid lightcoral;
+  border-radius: 8px;
+
+  @media screen and (max-width: 400px) {
+    width: calc(100vw - 20px);
+  }
+
+  &__item {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    border-bottom: 1px solid lightcoral;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    position: relative;
+
+    &:hover {
+      box-shadow: 1px 1px 5px lightgrey;
+      transform: scale(1.1);
+      z-index: 10;
+    }
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+@import "./../../../styles.scss";
+@import "./../../../styles/mixins.scss";
+
+.main {
+  background-color: whitesmoke;
+  width: 80vw;
+  margin-inline: auto;
+  padding: 20px;
+
+  @media screen and (max-width: 600px) {
+    width: 100vw;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+
+  &__expenses-for {
+    font-size: toRem(25);
+    text-decoration: underline;
+  }
+
+  &__add-expense-button {
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    font-size: toRem(40);
+    width: 50px;
+    height: 50px;
+    background-color: $primary;
+    cursor: pointer;
+    @include button-hover;
+    padding: 0;
+    box-shadow: 2px 5px 9px rgba(0, 0, 0, 0.3);
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+
+    @media screen and (max-width: 400px) {
+      justify-content: center;
+    }
+  }
+}

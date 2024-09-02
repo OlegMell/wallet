@@ -1,0 +1,32 @@
+<div class="main">
+  <div class="main__header">
+    <h2 class="page-title">
+      Витрати @if (selectedDate) {
+      <span class="main__expenses-for">{{
+        "за: " + selectedDate.format("DD.MM.YYYY")
+      }}</span
+      >}
+    </h2>
+
+    <button
+      (click)="showAddExpensesForm = !showAddExpensesForm"
+      title="Додати витрати"
+      class="main__add-expense-button"
+    >
+      {{ showAddExpensesForm ? "-" : "+" }}
+    </button>
+  </div>
+
+  <div class="main__content">
+    <app-calendar (selectedDate)="handleSelectedDate($event)" />
+
+    @if (showAddExpensesForm) {
+    <app-add-expenses-form
+      (saveExpenses)="handleSaveExpenses($event)"
+      [date]="selectedDate ? selectedDate.format('DD.MM.YYYY') : today"
+    />
+    } @else {
+    <app-expenses-list [expenses]="expenses" />
+    }
+  </div>
+</div>

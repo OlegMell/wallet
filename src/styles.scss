@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "./styles/mixins.scss";
+
+@function toRem($value) {
+  $remValue: calc($value / 16) + rem;
+  @return $remValue;
+}
+
+$primary: rgba(
+  $color: orangered,
+  $alpha: 0.8,
+);
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+button {
+  color: black;
+}
+
+.arrow-btn {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  @include button-hover;
+
+  &-left {
+    background: 100%/100% url("./../public/icons/right-arrow.svg") no-repeat;
+    transform: rotate(180deg);
+  }
+
+  &-right {
+    background: 100%/100% url("./../public/icons/right-arrow.svg") no-repeat;
+  }
+}
+
+.page-title {
+  font-size: toRem(30);
+  margin-bottom: 10px;
+}

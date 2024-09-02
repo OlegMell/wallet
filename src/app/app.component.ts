@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 
-@Component({
-  selector: 'app-root',
+import { Header } from './components/header/header.component';
+
+@Component( {
   standalone: true,
-  imports: [RouterOutlet],
+  selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
-})
+  styleUrl: './app.component.scss',
+  imports: [
+    RouterOutlet,
+    Header,
+  ],
+} )
 export class AppComponent {
-  title = 'bud-get';
 }
