@@ -46,7 +46,8 @@
               "optimization": true,
               "extractLicenses": false,
               "sourceMap": false,
-              "aot": true
+              "aot": true,
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,

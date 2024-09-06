@@ -1,10 +1,11 @@
 import dayjs from 'dayjs';
-import { ChangeDetectionStrategy, Component, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, output } from '@angular/core';
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 dayjs.extend( customParseFormat )
 
 import { Month, Week, WeekDay } from '../../core/consts';
 import { DayComponent } from "./components/day/day.component";
+import { isTouchDevice } from '../../core/utilities';
 
 @Component( {
     standalone: true,
@@ -15,6 +16,9 @@ import { DayComponent } from "./components/day/day.component";
     imports: [ DayComponent ]
 } )
 export class CalendarComponent implements OnInit {
+
+    readonly cd: ChangeDetectorRef = inject( ChangeDetectorRef );
+
     days: string[] = [];
 
     months: string[] = Month;
@@ -23,6 +27,7 @@ export class CalendarComponent implements OnInit {
     currentDate: dayjs.Dayjs = dayjs();
 
     selectedDate = output<dayjs.Dayjs>();
+    collapseCalendar: boolean = false;
 
     get currentMonth(): string {
         return this.months[ this.currentDate.month() ];
@@ -30,6 +35,7 @@ export class CalendarComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildDays();
+        this.selectDay( dayjs().format() );
     }
 
     nextMonth(): void {
@@ -43,6 +49,10 @@ export class CalendarComponent implements OnInit {
     }
 
     selectDay( selectedDay: string ) {
+        if ( isTouchDevice() ) {
+            this.collapseCalendar = true;
+        }
+
         this.selectedDate.emit( dayjs( selectedDay ) );
     }
 

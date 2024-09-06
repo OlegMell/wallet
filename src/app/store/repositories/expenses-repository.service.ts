@@ -6,6 +6,7 @@ import { RepositoryService } from './repository-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Expense } from '../../core/interfaces/expense.interface';
 import { ExpensesFireBaseService } from '../data/expenses.service';
+import dayjs from 'dayjs';
 
 @Injectable( {
     providedIn: 'root'
@@ -39,6 +40,9 @@ export class ExpensesRepository implements RepositoryService<Expense> {
     }
 
     private getDataFromQuerySnapshot<T>( q: QuerySnapshot ): T[] {
+
+        console.log( q )
+
         if ( ( q as QuerySnapshot ).size ) {
             const data: T[] = [];
 

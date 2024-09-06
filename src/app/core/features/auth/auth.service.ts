@@ -1,7 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { from, switchMap, tap } from 'rxjs';
-import { Auth, GoogleAuthProvider, signInWithPopup, signOut } from '@angular/fire/auth';
+import { from, of, switchMap, tap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { effect, inject, Injectable, Signal } from '@angular/core';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { Auth, GoogleAuthProvider, signInWithPopup, signOut, User, user } from '@angular/fire/auth';
+
 import { UsersRepository } from '../../../store/repositories/users-repository.service';
 
 
@@ -15,7 +17,31 @@ export class AuthService {
 
     private readonly provider = new GoogleAuthProvider();
 
+    user$ = user( this.auth );
+
+    currentGoogleUser: Signal<User | undefined | null> = toSignal( this.user$ );
+
+    constructor() {
+        effect( () => {
+            if ( this.currentGoogleUser() ) {
+                this.findUser( this.currentGoogleUser()?.email! )
+                    .pipe(
+                        switchMap( ( querySnap: QuerySnapshot ) => {
+                            if ( querySnap.size ) {
+                                return of( querySnap.docs[ 0 ] );
+                            } else {
+                                return this.addUser();
+                            }
+                        } )
+                    ).subscribe( ( res: DocumentSnapshot ) => {
+                        this.fireBaseUser = res;
+                    } )
+            }
+        } );
+    }
+
     authenticatedUser: any;
+
     fireBaseUser!: DocumentSnapshot;
 
     get user() {
@@ -44,8 +70,8 @@ export class AuthService {
         } )
     }
 
-    private findUser() {
-        return this.usersRepository.getOne( this.user?.email! );
+    private findUser( userEmail?: string ) {
+        return this.usersRepository.getOne( userEmail || this.user?.email! );
     }
 
     private addUser() {

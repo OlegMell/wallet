@@ -1,0 +1,4 @@
+export enum CATEGORIES {
+    MEDICINE = 'yXq8VjJ6RLmz0Z8jBDyK',
+    ENTERTAINMENT = 'DBCLR8JyZ995me0a74Je',
+}

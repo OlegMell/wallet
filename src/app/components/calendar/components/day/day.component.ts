@@ -20,6 +20,10 @@ export class DayComponent {
 
     clicked = output<string>();
 
+    get isFutureDate(): boolean {
+        return dayjs( this.date() ).isAfter( dayjs(), 'date' );
+    }
+
     get isAnotherMonth(): boolean {
         return !dayjs( this.date() ).isSame( this.currentDate(), 'month' );
     }

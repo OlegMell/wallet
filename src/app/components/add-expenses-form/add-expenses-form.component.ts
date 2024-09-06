@@ -1,6 +1,7 @@
 import { AsyncPipe, NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ShopsService } from '../../core/features/shops/shops.service';
 import { CategoriesService } from '../../core/features/categories/categories.service';
@@ -36,9 +37,12 @@ export class AddExpensesFormComponent implements OnInit {
   saveExpenses = output<any>();
 
   readonly shopsService: ShopsService = inject( ShopsService );
+  readonly destroyRef: DestroyRef = inject( DestroyRef );
   readonly categoriesService: CategoriesService = inject( CategoriesService );
 
   addExpenseForm!: FormGroup<AddExpensesForm>;
+
+  selectedDefaultCategory!: string;
 
   get expenses(): FormGroup[] {
     return ( this.addExpenseForm.controls.expenses as FormArray ).controls as FormGroup[];
@@ -46,6 +50,7 @@ export class AddExpensesFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.observeForm();
   }
 
   private buildForm(): void {
@@ -53,6 +58,20 @@ export class AddExpensesFormComponent implements OnInit {
       shop: new FormControl<string>( '', { nonNullable: true } ),
       expenses: new FormArray( [ this.expensesGroup() ] )
     } );
+  }
+
+  private observeForm(): void {
+    this.addExpenseForm.controls.expenses.valueChanges
+      .pipe(
+        takeUntilDestroyed( this.destroyRef )
+      )
+      .subscribe( ( value: any ) => {
+        if ( value && value.length ) {
+          if ( !this.selectedDefaultCategory ) {
+            this.selectedDefaultCategory = value[ 0 ]?.categoryId!;
+          }
+        }
+      } );
   }
 
   removeExpense( idx: number ) {
@@ -72,7 +91,7 @@ export class AddExpensesFormComponent implements OnInit {
     return new FormGroup( {
       title: new FormControl<string>( '', { validators: [ Validators.required ], nonNullable: true } ),
       sum: new FormControl<string>( '', { validators: [ Validators.required ], nonNullable: true } ),
-      categoryId: new FormControl<string>( '', { validators: [], nonNullable: true } ),
+      categoryId: new FormControl<string>( this.selectedDefaultCategory || '', { validators: [], nonNullable: true } ),
     } );
   }
 

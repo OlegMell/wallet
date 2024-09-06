@@ -1,15 +1,17 @@
 <div class="main">
+  <!-- authService.currentGoogleUser() && authService.fireBaseUser -->
+  @if (authService.currentGoogleUser() && authService.fireBaseUser) {
   <div class="main__header">
     <h2 class="page-title">
       Витрати @if (selectedDate) {
-      <span class="main__expenses-for">{{
+      <span (click)="handleShowCalendarClick()" class="main__expenses-for">{{
         "за: " + selectedDate.format("DD.MM.YYYY")
-      }}</span
-      >}
+      }}</span>
+      }
     </h2>
 
     <button
-      (click)="showAddExpensesForm = !showAddExpensesForm"
+      (click)="handleAddExpense()"
       title="Додати витрати"
       class="main__add-expense-button"
     >
@@ -18,9 +20,9 @@
   </div>
 
   <div class="main__content">
-    <app-calendar (selectedDate)="handleSelectedDate($event)" />
-
-    @if (showAddExpensesForm) {
+    @if (showCalendar) {
+    <app-calendar #calendar (selectedDate)="handleSelectedDate($event)" />
+    } @if (showAddExpensesForm) {
     <app-add-expenses-form
       (saveExpenses)="handleSaveExpenses($event)"
       [date]="selectedDate ? selectedDate.format('DD.MM.YYYY') : today"
@@ -29,4 +31,14 @@
     <app-expenses-list [expenses]="expenses" />
     }
   </div>
+  } @else if (authService.currentGoogleUser() === undefined) {
+  <div class="loader"></div>
+  } @else if(authService.currentGoogleUser() === null) {
+
+  <div class="main__start-page">
+    <img src="./icons/wallet.png" alt="welcom icon" />
+  </div>
+  <br />
+  <h3 style="text-align: center">Зайдіть у свій аккаунт)</h3>
+  }
 </div>

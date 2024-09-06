@@ -1,11 +1,12 @@
 @import "../../../styles.scss";
 
 .header {
-  background-color: rgba($color: orangered, $alpha: 0.8);
+  background-color: rgba($color: #ff7f50, $alpha: 1);
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  gap: 5px;
 
   &__actions {
     display: flex;
@@ -34,6 +35,10 @@
     border-radius: 8px;
     cursor: pointer;
     @include button-hover;
+
+    @media screen and (max-width: 400px) {
+      padding: 5px;
+    }
   }
 
   &__logout-btn {

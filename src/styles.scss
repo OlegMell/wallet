@@ -7,11 +7,6 @@
   @return $remValue;
 }
 
-$primary: rgba(
-  $color: orangered,
-  $alpha: 0.8,
-);
-
 * {
   padding: 0;
   margin: 0;
@@ -30,6 +25,11 @@ button {
   border: none;
   transition: all 0.2s ease-in-out;
   @include button-hover;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 0.9;
+  }
 
   &-left {
     background: 100%/100% url("./../public/icons/right-arrow.svg") no-repeat;
@@ -45,3 +45,4 @@ button {
   font-size: toRem(30);
   margin-bottom: 10px;
 }
+

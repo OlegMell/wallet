@@ -1,11 +1,13 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
 
 import { AuthService } from '../../core/features/auth/auth.service';
 import { UsersRepository } from '../../store/repositories/users-repository.service';
 import { ExpensesService } from '../../core/features/expenses/expenses.service';
 import { ShopsService } from '../../core/features/shops/shops.service';
 import { CategoriesService } from '../../core/features/categories/categories.service';
+import { CurrencyService } from '../../core/features/currency/currency.service';
+import { CurrencyComponent } from "../currency/currency.component";
 
 @Component( {
     standalone: true,
@@ -14,27 +16,46 @@ import { CategoriesService } from '../../core/features/categories/categories.ser
     styleUrl: './header.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        AsyncPipe
-    ]
+    AsyncPipe,
+    CurrencyComponent
+]
 } )
-export class Header {
+export class Header implements OnInit {
     readonly authService: AuthService = inject( AuthService );
     readonly expensesService: ExpensesService = inject( ExpensesService );
     readonly shopsService: ShopsService = inject( ShopsService );
     readonly categoriesService: CategoriesService = inject( CategoriesService );
     readonly usersRepository: UsersRepository = inject( UsersRepository );
     readonly cd: ChangeDetectorRef = inject( ChangeDetectorRef );
+    readonly currencyService: CurrencyService = inject( CurrencyService );
+
+    constructor() {
+        effect( () => {
+            if ( this.authService.currentGoogleUser() ) {
+                this.fetchInitialData();
+            }
+        } )
+    }
+
+    ngOnInit(): void {
+        this.currencyService.fetchCurrencies();
+        this.cd.markForCheck();
+    }
 
     signIn(): void {
         this.authService.signIn()
             .subscribe( () => {
-                this.categoriesService.fetchData();
-                this.shopsService.fetchData();
-                this.cd.markForCheck();
+                this.fetchInitialData();
             } );
     }
 
     logout() {
         this.authService.logout();
+    }
+
+    private fetchInitialData() {
+        this.categoriesService.fetchData();
+        this.shopsService.fetchData();
+        this.cd.markForCheck();
     }
 }

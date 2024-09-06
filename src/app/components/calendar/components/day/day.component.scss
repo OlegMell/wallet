@@ -49,4 +49,9 @@
   &.another-month {
     background-color: rgba(gray, 0.05);
   }
+
+  &.disabled {
+    pointer-events: none;
+    background-color: rgba(gray, 0.08);
+  }
 }

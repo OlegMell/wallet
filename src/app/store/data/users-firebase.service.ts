@@ -1,4 +1,4 @@
-import { EMPTY, from, Observable, of } from 'rxjs';
+import { EMPTY, from, Observable, of, switchMap } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { collection, collectionData, Firestore, doc, getDoc, addDoc, DocumentReference, DocumentSnapshot, query, where } from '@angular/fire/firestore';
 
@@ -26,7 +26,14 @@ export class UsersFireBaseService implements FireBaseService<any> {
     }
 
     add( user: { email: string, fullName: string } ): Observable<any> {
-        return from( addDoc( this.usersCollection, user ) );
+        return this.getOne( user.email )
+            .pipe( switchMap( ( q: QuerySnapshot ) => {
+                if ( q.size ) {
+                    return of( q.docs[ 0 ] )
+                } else {
+                    return from( addDoc( this.usersCollection, user ) )
+                }
+            } ) );
     }
 
     update(): Observable<any> {

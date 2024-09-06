@@ -1,10 +1,58 @@
 <div class="expenses-list">
   @if (!expenses().length) {
-  <h3>Немає жодної витрати</h3>
-  } @for (expense of expenses(); track expense.id) {
-  <div class="expenses-list__item">
-    {{ expense.title }}
-    <span class="expenses-list__item__summ">{{ expense.sum }} грн.</span>
+  <br />
+  <h3 style="text-align: center">Немає жодної витрати</h3>
+  <br />
+  } @else if (expensesByCategoryMap.size) {
+  <div class="expenses-list__totals">
+    <div style="display: flex; gap: 5px; align-items: center">
+      <h3
+        class="expenses-list__totals__day-total"
+        [class.active]="!selectedCategory"
+        (click)="handleDayTotalClick()"
+      >
+        Усього за день:
+      </h3>
+      <app-total-amount [expenses]="expenses()" />
+    </div>
+    <h3>За категоріями:</h3>
+    @for (category of expensesByCategoryMap.keys(); track category.id) {
+    <div
+      (click)="handleCategoryTotal(category)"
+      class="expenses-list__expense-category"
+    >
+      <span
+        class="expenses-list__expense-category__category-name"
+        [class.active]="selectedCategory && selectedCategory.id === category.id"
+        >{{ category.title }}:
+      </span>
+      <app-total-amount [expenses]="expensesByCategoryMap.get(category)" />
+    </div>
+    }
   </div>
-  }
+  } @for (key of expensesByShopMap.keys(); track key.id) { @if
+  (expensesByShopMap.get(key).length) {
+  <div class="expenses-list__item" (click)="handleSelectShop(key)">
+    <div class="expenses-list__item__header">
+      {{ key.title }}
+      <span class="expenses-list__item__summ">
+        <app-total-amount [expenses]="expensesByShopMap.get(key)" />
+      </span>
+    </div>
+
+    @if (selectedShop && selectedShop.id === key.id) {
+    <div class="expenses-list__item__details">
+      @for (expense of expensesByShopMap.get(key); track expense.id) { @if
+      (expense.title !== key.title) {
+      <div class="expenses-list__item">
+        <div class="expenses-list__item__header">
+          {{ expense.title }}
+          <span class="expenses-list__item__summ">{{ expense.sum }} грн.</span>
+        </div>
+      </div>
+      } }
+    </div>
+    }
+  </div>
+  } }
 </div>

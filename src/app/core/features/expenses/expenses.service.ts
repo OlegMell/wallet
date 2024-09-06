@@ -5,6 +5,11 @@ import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { Expense } from '../../interfaces/expense.interface';
 import { ExpensesRepository } from '../../../store/repositories/expenses-repository.service';
+import dayjs from 'dayjs';
+
+
+export const DRUG_STORE_ID = 'yBvK7Atjhsa1VSXd7ucX';
+export const MEDICInE_CATEGORY_ID = 'yXq8VjJ6RLmz0Z8jBDyK';
 
 @Injectable( {
     providedIn: 'root'
@@ -40,6 +45,10 @@ export class ExpensesService {
     }
 
     fetchByDate( date: string ): Observable<Expense[]> {
+
+        console.log( this.authService.fireBaseUser )
+        console.log( this.authService.fireBaseUser?.id )
+
         if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
             return EMPTY;
         }
@@ -47,13 +56,14 @@ export class ExpensesService {
         return this.repository.getByDate( date, this.authService.fireBaseUser.id )
     }
 
-    create( expenses: { shop: string, expenses: Partial<Expense>[] } ): Observable<any> {
+    create( expenses: { shop: string, expenses: Partial<Expense>[] }, date: dayjs.Dayjs ): Observable<any> {
         return from( expenses.expenses )
             .pipe(
                 switchMap( ( expense ) => this.repository.add( {
                     ...expense,
-                    shopId: expenses.shop,
-                    userId: this.authService.fireBaseUser.id
+                    shopId: isMedicineCategory( expense.categoryId ) ? DRUG_STORE_ID : expenses.shop,
+                    userId: this.authService.fireBaseUser.id,
+                    date: date.format( 'DD.MM.YYYY' )
                 } ) )
             );
     }
@@ -62,4 +72,8 @@ export class ExpensesService {
         this.#expenses = EMPTY;
     }
 
+}
+
+function isMedicineCategory( categoryId: string | undefined ): boolean {
+    return categoryId === MEDICInE_CATEGORY_ID;
 }

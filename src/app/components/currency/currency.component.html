@@ -1,0 +1,5 @@
+<div class="currencies">
+  @for (c of (currencyService.currency | async); track c) {
+  <div class="currencies__currency">{{ c.cc }}: {{ c.rate }} UAH</div>
+  }
+</div>

@@ -1,4 +1,4 @@
-import { EMPTY, map, Observable, tap } from 'rxjs';
+import { EMPTY, map, Observable, of, shareReplay, tap } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 
@@ -14,7 +14,7 @@ export class CategoriesService {
     private readonly authService: AuthService = inject( AuthService );
     private readonly repository: CategoriesRepository = inject( CategoriesRepository );
 
-    #categories!: Observable<Category[]>;
+    #categories: Observable<Category[]> = of( [] );
 
     get categories(): Observable<Category[]> {
         return this.#categories;
@@ -22,7 +22,8 @@ export class CategoriesService {
 
     fetchData(): void {
         this.#categories = this.repository.getAll().pipe(
-            tap( ( res ) => console.log( res ) )
+            tap( ( res ) => console.log( res ) ),
+            shareReplay()
         )
     }
 

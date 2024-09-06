@@ -1,0 +1,17 @@
+@import "./../../../styles.scss";
+
+.currencies {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 3px;
+
+  @media screen and (max-width: 400px) {
+    justify-content: center;
+  }
+
+  &__currency {
+    font-size: toRem(12);
+    font-weight: bold;
+  }
+}

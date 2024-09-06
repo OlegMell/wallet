@@ -1,4 +1,4 @@
-import { EMPTY, map, Observable } from 'rxjs';
+import { EMPTY, map, Observable, of } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 
@@ -16,7 +16,7 @@ export class ShopsService {
     private readonly authService: AuthService = inject( AuthService );
     private readonly repository: ShopsRepository = inject( ShopsRepository );
 
-    #shops!: Observable<Shop[]>;
+    #shops: Observable<Shop[]> = of( [] );
 
     get shops(): Observable<Shop[]> {
         return this.#shops;

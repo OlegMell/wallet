@@ -19,7 +19,7 @@ export class ExpensesFireBaseService implements FireBaseService<Expense> {
 
     getAll( userId: FireBaseId ): Observable<Expense[] | QuerySnapshot> {
         if ( userId ) {
-            const q = query( this.expensesCollection, where( "userId", "==", userId ) );
+            const q = query( this.expensesCollection, where( "userId", "==", userId ), );
             return from( getDocs( q ) );
         } else {
             return collectionData( this.expensesCollection ) as Observable<Expense[]>;
@@ -36,7 +36,7 @@ export class ExpensesFireBaseService implements FireBaseService<Expense> {
     }
 
     add( expense: Partial<Expense> ): Observable<any> {
-        const expenseToCreate = { ...expense, date: dayjs().format( 'DD.MM.YYYY' ) };
+        const expenseToCreate = { ...expense };
         return from( addDoc( this.expensesCollection, expenseToCreate ) );
     }
 

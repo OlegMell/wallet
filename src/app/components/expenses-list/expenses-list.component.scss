@@ -7,6 +7,47 @@
     width: calc(100vw - 20px);
   }
 
+  &__totals {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 10px lightgrey;
+
+    &__day-total {
+      display: inline-block;
+      cursor: pointer;
+
+      &.active {
+        background-color: lightcoral;
+        padding: 5px;
+        border-radius: 8px;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  &__expense-category {
+    display: flex;
+    align-items: center;
+
+    &__category-name {
+      font-weight: bold;
+      padding-right: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &.active {
+        background-color: lightcoral;
+        padding: 5px;
+        border-radius: 8px;
+        margin-right: 5px;
+      }
+    }
+  }
+
   &__item {
     cursor: pointer;
     padding: 10px;
@@ -17,15 +58,25 @@
     justify-content: space-between;
     transition: all 0.2s ease;
     position: relative;
+    flex-direction: column;
 
     &:hover {
       box-shadow: 1px 1px 5px lightgrey;
-      transform: scale(1.1);
+      transform: scale(1.02);
       z-index: 10;
     }
 
     &:last-of-type {
       border-bottom: none;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__details {
+      padding-left: 20px;
     }
   }
 }
