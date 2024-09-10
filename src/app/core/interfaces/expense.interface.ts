@@ -4,7 +4,7 @@ export interface Expense {
     id: FireBaseId;
     date: string;
     title: string;
-    sum: string;
+    sum: number;
     categoryId: string;
     userId: string;
     shopId: string;

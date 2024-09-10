@@ -12,6 +12,7 @@
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 button {
@@ -45,4 +46,3 @@ button {
   font-size: toRem(30);
   margin-bottom: 10px;
 }
-

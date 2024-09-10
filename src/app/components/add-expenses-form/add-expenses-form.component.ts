@@ -1,5 +1,5 @@
 import { AsyncPipe, NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, input, OnInit, output, viewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -9,7 +9,7 @@ import { CategoriesService } from '../../core/features/categories/categories.ser
 
 export interface ExpenseForm {
   title: FormControl<string>;
-  sum: FormControl<string>;
+  sum: FormControl<number>;
   categoryId: FormControl<string>;
 }
 
@@ -43,6 +43,8 @@ export class AddExpensesFormComponent implements OnInit {
   addExpenseForm!: FormGroup<AddExpensesForm>;
 
   selectedDefaultCategory!: string;
+
+  formContainer = viewChild<ElementRef<HTMLFormElement>>( 'form' );
 
   get expenses(): FormGroup[] {
     return ( this.addExpenseForm.controls.expenses as FormArray ).controls as FormGroup[];
@@ -80,6 +82,10 @@ export class AddExpensesFormComponent implements OnInit {
 
   addExpense(): void {
     this.addExpenseForm.controls.expenses.push( this.expensesGroup() );
+
+    setTimeout( () => {
+      this.formContainer()!.nativeElement!.scrollTop = this.formContainer()?.nativeElement?.scrollHeight!;
+    } )
   }
 
   saveForm(): void {
@@ -90,7 +96,7 @@ export class AddExpensesFormComponent implements OnInit {
   private expensesGroup(): FormGroup<ExpenseForm> {
     return new FormGroup( {
       title: new FormControl<string>( '', { validators: [ Validators.required ], nonNullable: true } ),
-      sum: new FormControl<string>( '', { validators: [ Validators.required ], nonNullable: true } ),
+      sum: new FormControl<number>( 0, { validators: [ Validators.required ], nonNullable: true } ),
       categoryId: new FormControl<string>( this.selectedDefaultCategory || '', { validators: [], nonNullable: true } ),
     } );
   }

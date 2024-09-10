@@ -41,6 +41,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
+
   }
 
   handleShowCalendarClick() {
@@ -62,10 +63,13 @@ export class MainComponent implements OnInit {
   private fetchExpensesByDate( date: dayjs.Dayjs ) {
     this.expensesService.fetchByDate( `${ date.format( 'DD.MM.YYYY' ) }` )
       .subscribe( ( expenses: Expense[] ) => {
-        console.log( expenses )
         this.expenses = expenses;
         this.cd.markForCheck();
       } );
+
+    // this.expensesService.getSumForMonth().subscribe( res => {
+    //   console.log( res )
+    // } )
   }
 
   handleSaveExpenses( formValue: any ) {
@@ -75,6 +79,5 @@ export class MainComponent implements OnInit {
         this.fetchExpensesByDate( this.selectedDate || dayjs() );
       } );
   }
-
 
 }

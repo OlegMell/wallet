@@ -14,7 +14,7 @@ export class TotalAmountComponent {
     get total(): number {
         return this.expenses()
             .map( ( expense ) => expense.sum )
-            .reduce( ( acc: number, value: string ) => acc + +value, 0 );
+            .reduce( ( acc: number, value: number ) => acc + value, 0 );
 
     }
 

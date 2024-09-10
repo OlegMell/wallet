@@ -2,7 +2,7 @@
 @import "./../../../styles/mixins.scss";
 
 .main {
-  background-color: whitesmoke;
+  background-color: rgba($color: whitesmoke, $alpha: .5);
   width: 80vw;
   margin-inline: auto;
   padding: 20px;

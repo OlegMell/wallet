@@ -22,9 +22,8 @@ export class CategoriesService {
 
     fetchData(): void {
         this.#categories = this.repository.getAll().pipe(
-            tap( ( res ) => console.log( res ) ),
             shareReplay()
-        )
+        );
     }
 
     clearData(): void {

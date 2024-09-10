@@ -1,5 +1,4 @@
 <div class="main">
-  <!-- authService.currentGoogleUser() && authService.fireBaseUser -->
   @if (authService.currentGoogleUser() && authService.fireBaseUser) {
   <div class="main__header">
     <h2 class="page-title">
@@ -34,7 +33,6 @@
   } @else if (authService.currentGoogleUser() === undefined) {
   <div class="loader"></div>
   } @else if(authService.currentGoogleUser() === null) {
-
   <div class="main__start-page">
     <img src="./icons/wallet.png" alt="welcom icon" />
   </div>

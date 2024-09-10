@@ -1,6 +1,6 @@
-import { EMPTY, map, Observable } from 'rxjs';
+import { EMPTY, map, Observable, retry } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { DocumentSnapshot, QuerySnapshot, where } from '@angular/fire/firestore';
+import { AggregateQuerySnapshot, DocumentSnapshot, QuerySnapshot, sum, where } from '@angular/fire/firestore';
 
 import { RepositoryService } from './repository-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
@@ -31,7 +31,6 @@ export class ExpensesRepository implements RepositoryService<Expense> {
     }
 
     add( expense: Partial<Expense> ): Observable<any> {
-        console.log( expense )
         return this.expensesService.add( expense );
     }
 
@@ -39,9 +38,16 @@ export class ExpensesRepository implements RepositoryService<Expense> {
         return EMPTY;
     }
 
-    private getDataFromQuerySnapshot<T>( q: QuerySnapshot ): T[] {
+    getSumByDateRange( startDate: string, endDate: string, userId: FireBaseId ): Observable<any> {
+        return this.expensesService.getSumBy(
+            where( "date", ">=", startDate ),
+            where( "date", "<=", endDate ),
+        ).pipe( map( ( q: QuerySnapshot ) => {
+            return this.getDataFromAggregatedQuerySnapshot( q );
+        } ) );
+    }
 
-        console.log( q )
+    private getDataFromQuerySnapshot<T>( q: QuerySnapshot ): T[] {
 
         if ( ( q as QuerySnapshot ).size ) {
             const data: T[] = [];
@@ -54,6 +60,10 @@ export class ExpensesRepository implements RepositoryService<Expense> {
         }
 
         return [];
+    }
+
+    private getDataFromAggregatedQuerySnapshot<T>( q: QuerySnapshot ): T[] {
+        return ( q as any ).data();
     }
 
 }

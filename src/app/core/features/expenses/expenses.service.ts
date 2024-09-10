@@ -1,4 +1,4 @@
-import { EMPTY, from, map, Observable, switchMap } from 'rxjs';
+import { EMPTY, from, map, Observable, of, switchMap } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 
@@ -19,7 +19,7 @@ export class ExpensesService {
     private readonly authService: AuthService = inject( AuthService );
     private readonly repository: ExpensesRepository = inject( ExpensesRepository );
 
-    #expenses!: Observable<Expense[]>;
+    #expenses: Observable<Expense[]> = of( [] );
 
     get expenses(): Observable<Expense[]> {
         return this.#expenses;
@@ -45,15 +45,28 @@ export class ExpensesService {
     }
 
     fetchByDate( date: string ): Observable<Expense[]> {
-
-        console.log( this.authService.fireBaseUser )
-        console.log( this.authService.fireBaseUser?.id )
-
         if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
             return EMPTY;
         }
 
         return this.repository.getByDate( date, this.authService.fireBaseUser.id )
+    }
+
+    // fetchByMonth(): Observable<Expense[]> {
+    //     if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
+    //         return EMPTY;
+    //     }
+
+    //     return this.repository.getByDate( date, this.authService.fireBaseUser.id )
+    // }
+
+    getSumForMonth(): Observable<number> {
+        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
+            return EMPTY;
+        }
+
+        return this.repository.getSumByDateRange( dayjs().startOf( 'month' ).format( 'DD.MM.YYYY' ),
+            dayjs().endOf( 'month' ).format( 'DD.MM.YYYY' ), this.authService.fireBaseUser.id )
     }
 
     create( expenses: { shop: string, expenses: Partial<Expense>[] }, date: dayjs.Dayjs ): Observable<any> {
@@ -63,7 +76,8 @@ export class ExpensesService {
                     ...expense,
                     shopId: isMedicineCategory( expense.categoryId ) ? DRUG_STORE_ID : expenses.shop,
                     userId: this.authService.fireBaseUser.id,
-                    date: date.format( 'DD.MM.YYYY' )
+                    date: date.format( 'DD.MM.YYYY' ),
+                    sum: expense.sum ? +expense.sum : 0
                 } ) )
             );
     }

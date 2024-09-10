@@ -5,30 +5,29 @@
   <br />
   } @else if (expensesByCategoryMap.size) {
   <div class="expenses-list__totals">
-    <div style="display: flex; gap: 5px; align-items: center">
-      <h3
-        class="expenses-list__totals__day-total"
-        [class.active]="!selectedCategory"
-        (click)="handleDayTotalClick()"
-      >
-        Усього за день:
-      </h3>
+    <div
+      class="expenses-list__expense-category"
+      [class.active]="!selectedCategory"
+      (click)="handleDayTotalClick()"
+    >
+      <h3 class="expenses-list__totals__day-total">За день:</h3>
       <app-total-amount [expenses]="expenses()" />
     </div>
-    <h3>За категоріями:</h3>
-    @for (category of expensesByCategoryMap.keys(); track category.id) {
-    <div
-      (click)="handleCategoryTotal(category)"
-      class="expenses-list__expense-category"
-    >
-      <span
-        class="expenses-list__expense-category__category-name"
+    <h3>Категорії:</h3>
+    <div class="expenses-list__totals__categories">
+      @for (category of expensesByCategoryMap.keys(); track category.id) {
+      <div
+        (click)="handleCategoryTotal(category)"
+        class="expenses-list__expense-category"
         [class.active]="selectedCategory && selectedCategory.id === category.id"
-        >{{ category.title }}:
-      </span>
-      <app-total-amount [expenses]="expensesByCategoryMap.get(category)" />
+      >
+        <span class="expenses-list__expense-category__category-name"
+          >{{ category.title }}
+        </span>
+        <app-total-amount [expenses]="expensesByCategoryMap.get(category)" />
+      </div>
+      }
     </div>
-    }
   </div>
   } @for (key of expensesByShopMap.keys(); track key.id) { @if
   (expensesByShopMap.get(key).length) {

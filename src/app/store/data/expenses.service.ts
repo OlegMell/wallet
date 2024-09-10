@@ -1,11 +1,11 @@
 import { EMPTY, from, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, Firestore, getDocs, Query, query, QueryFieldFilterConstraint, QuerySnapshot, where } from '@angular/fire/firestore';
+import { collection, collectionData, Firestore, getAggregateFromServer, getDocs, Query, query, QueryFieldFilterConstraint, QuerySnapshot, sum, where } from '@angular/fire/firestore';
 
 import { FireBaseService } from './firebase-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Expense } from '../../core/interfaces/expense.interface';
-import { addDoc } from 'firebase/firestore';
+import { addDoc, AggregateQuerySnapshot } from 'firebase/firestore';
 import dayjs from 'dayjs';
 
 @Injectable( {
@@ -33,6 +33,13 @@ export class ExpensesFireBaseService implements FireBaseService<Expense> {
     getBy( ...queryFilter: QueryFieldFilterConstraint[] ): Observable<QuerySnapshot> {
         const q = query( this.expensesCollection, ...queryFilter );
         return from( getDocs( q ) );
+    }
+
+    getSumBy( ...queryFilter: QueryFieldFilterConstraint[] ): Observable<any> {
+        const q = query( this.expensesCollection, ...queryFilter )
+        return from( getAggregateFromServer( q, {
+            totalSum: sum( 'sum' )
+        } ) );
     }
 
     add( expense: Partial<Expense> ): Observable<any> {

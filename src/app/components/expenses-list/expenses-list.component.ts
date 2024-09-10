@@ -42,9 +42,6 @@ export class ExpensesListComponent {
   constructor() {
     effect( () => {
       if ( this.expenses() ) {
-
-        console.log( this.expenses() )
-
         this.selectedShop = undefined;
         this.selectedCategory = undefined;
         this.mapExpensesByCategory();
