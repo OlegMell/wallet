@@ -19,6 +19,11 @@
     margin-bottom: 20px;
     box-shadow: 1px 1px 10px lightgrey;
 
+    &__date-ranges {
+      display: flex;
+      gap: 10px;
+    }
+
     &__day-total {
       display: inline-block;
       cursor: pointer;

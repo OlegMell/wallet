@@ -5,11 +5,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ShopsService } from '../../core/features/shops/shops.service';
 import { CategoriesService } from '../../core/features/categories/categories.service';
+import { Shops } from '../../core/shops.enum';
+import { CATEGORIES } from '../../core/categories.enum';
 
 
 export interface ExpenseForm {
   title: FormControl<string>;
-  sum: FormControl<number>;
+  sum: FormControl<number | undefined>;
   categoryId: FormControl<string>;
 }
 
@@ -63,6 +65,22 @@ export class AddExpensesFormComponent implements OnInit {
   }
 
   private observeForm(): void {
+
+    this.addExpenseForm.controls.shop.valueChanges
+      .pipe(
+        takeUntilDestroyed( this.destroyRef )
+      )
+      .subscribe( shop => {
+        if ( shop ) {
+
+          if ( shop === Shops.DRUGS ) {
+            this.setCategoryAsMedicine();
+            return;
+          }
+
+        }
+      } );
+
     this.addExpenseForm.controls.expenses.valueChanges
       .pipe(
         takeUntilDestroyed( this.destroyRef )
@@ -93,10 +111,16 @@ export class AddExpensesFormComponent implements OnInit {
     this.addExpenseForm.reset();
   }
 
+  private setCategoryAsMedicine(): void {
+    this.selectedDefaultCategory = CATEGORIES.MEDICINE;
+    ( this.addExpenseForm.get( 'expenses' ) as FormArray )
+      .controls[ 0 ].get<string>( 'categoryId' )?.setValue( CATEGORIES.MEDICINE );
+  }
+
   private expensesGroup(): FormGroup<ExpenseForm> {
     return new FormGroup( {
       title: new FormControl<string>( '', { validators: [ Validators.required ], nonNullable: true } ),
-      sum: new FormControl<number>( 0, { validators: [ Validators.required ], nonNullable: true } ),
+      sum: new FormControl<number | undefined>( undefined, { validators: [ Validators.required ], nonNullable: true } ),
       categoryId: new FormControl<string>( this.selectedDefaultCategory || '', { validators: [], nonNullable: true } ),
     } );
   }

@@ -5,14 +5,26 @@
   <br />
   } @else if (expensesByCategoryMap.size) {
   <div class="expenses-list__totals">
-    <div
-      class="expenses-list__expense-category"
-      [class.active]="!selectedCategory"
-      (click)="handleDayTotalClick()"
-    >
-      <h3 class="expenses-list__totals__day-total">За день:</h3>
-      <app-total-amount [expenses]="expenses()" />
+    <div class="expenses-list__totals__date-ranges">
+      <div
+        class="expenses-list__expense-category"
+        [class.active]="!selectedCategory"
+        (click)="handleDayTotalClick()"
+      >
+        <h3 class="expenses-list__totals__day-total">За день:</h3>
+        <app-total-amount [expenses]="expenses()" />
+      </div>
+
+      <!-- <div
+        class="expenses-list__expense-category"
+        [class.active]="!selectedCategory"
+        (click)="handleDayTotalClick()"
+      >
+        <h3 class="expenses-list__totals__day-total">За день:</h3>
+        <app-total-amount [expenses]="expenses()" />
+      </div> -->
     </div>
+
     <h3>Категорії:</h3>
     <div class="expenses-list__totals__categories">
       @for (category of expensesByCategoryMap.keys(); track category.id) {
