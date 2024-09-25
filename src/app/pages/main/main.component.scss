@@ -1,11 +1,12 @@
 @import "./../../../styles.scss";
-@import "./../../../styles/mixins.scss";
 
 .main {
-  background-color: rgba($color: whitesmoke, $alpha: .5);
+  border-radius: 30px;
   width: 80vw;
   margin-inline: auto;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
 
   @media screen and (max-width: 1065px) {
     width: 100vw;
@@ -13,7 +14,7 @@
 
   @media screen and (max-width: 600px) {
     width: 100vw;
-    padding: 10px;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
   }
@@ -37,7 +38,7 @@
     font-size: toRem(40);
     width: 50px;
     height: 50px;
-    background-color: coral;
+    @include backgroundPrimaryColor(0.6);
     cursor: pointer;
     @include button-hover;
     padding: 0;
@@ -51,7 +52,8 @@
     justify-content: space-between;
 
     @media screen and (max-width: 400px) {
-      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
   }
 
@@ -88,4 +90,15 @@
     transform: rotate(180deg);
     opacity: 1;
   }
+}
+
+.blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: rgba($color: whitesmoke, $alpha: 0.5);
+  filter: blur(5px);
 }

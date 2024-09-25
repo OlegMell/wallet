@@ -5,6 +5,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   gap: 3px;
+  color: rgba($color: whitesmoke, $alpha: 0.85);
 
   @media screen and (max-width: 400px) {
     justify-content: center;

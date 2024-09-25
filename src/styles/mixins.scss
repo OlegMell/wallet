@@ -6,3 +6,8 @@
     background-color: rgba($color: #000000, $alpha: 0.1);
   }
 }
+
+
+@mixin backgroundPrimaryColor($opacity) {
+  background-color: rgba(79, 70, 185, $opacity);
+}

@@ -55,7 +55,7 @@
     <div class="expenses-list__item__details">
       @for (expense of expensesByShopMap.get(key); track expense.id) { @if
       (expense.title !== key.title) {
-      <div class="expenses-list__item">
+      <div class="expenses-list__item sub-item">
         <div class="expenses-list__item__header">
           {{ expense.title }}
           <span class="expenses-list__item__summ">{{ expense.sum }} грн.</span>
