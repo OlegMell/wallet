@@ -1,12 +1,13 @@
 import { EMPTY, map, Observable, retry } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { AggregateQuerySnapshot, DocumentSnapshot, QuerySnapshot, sum, where } from '@angular/fire/firestore';
+import { AggregateQuerySnapshot, and, DocumentSnapshot, QuerySnapshot, sum, where } from '@angular/fire/firestore';
 
 import { RepositoryService } from './repository-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Expense } from '../../core/interfaces/expense.interface';
 import { ExpensesFireBaseService } from '../data/expenses.service';
 import dayjs from 'dayjs';
+import { DateRange } from '../../components/calendar/calendar.component';
 
 @Injectable( {
     providedIn: 'root'
@@ -23,6 +24,22 @@ export class ExpensesRepository implements RepositoryService<Expense> {
         return this.expensesService.getBy(
             where( "userId", "==", userId ),
             where( "date", "==", date )
+        ).pipe( map( ( q: QuerySnapshot ) => this.getDataFromQuerySnapshot( q ) ) );
+    }
+
+    getByRange( range: DateRange, userId: FireBaseId ): Observable<Expense[]> {
+        const rangeDates = [ range.start.format( 'DD.MM.YYYY' ) ];
+
+        let date = '';
+        let days = 1;
+        while ( date !== range.end.format( 'DD.MM.YYYY' ) ) {
+            date = dayjs( range.start ).add( days++, 'day' ).format( 'DD.MM.YYYY' )
+            rangeDates.push( date );
+        }
+
+        return this.expensesService.getBy(
+            where( "userId", "==", userId ),
+            where( "date", 'in', rangeDates ),
         ).pipe( map( ( q: QuerySnapshot ) => this.getDataFromQuerySnapshot( q ) ) );
     }
 

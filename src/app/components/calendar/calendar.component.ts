@@ -7,6 +7,13 @@ import { Month, Week, WeekDay } from '../../core/consts';
 import { DayComponent } from "./components/day/day.component";
 import { isTouchDevice } from '../../core/utilities';
 
+
+export interface DateRange {
+    start: dayjs.Dayjs;
+    end: dayjs.Dayjs
+};
+
+
 @Component( {
     standalone: true,
     selector: 'app-calendar',
@@ -27,10 +34,25 @@ export class CalendarComponent implements OnInit {
     currentDate: dayjs.Dayjs = dayjs();
 
     selectedDate = output<dayjs.Dayjs>();
+    selectedRange = output<DateRange>();
     collapseCalendar: boolean = false;
+
+    range: { start: dayjs.Dayjs; end: dayjs.Dayjs } | undefined;
 
     get currentMonth(): string {
         return this.months[ this.currentDate.month() ];
+    }
+
+    get today(): string {
+        return dayjs().format();
+    }
+
+    get yesterday(): string {
+        return dayjs().subtract( 1, 'day' ).format();
+    }
+
+    get theDayBeforeYesterday(): string {
+        return dayjs().subtract( 2, 'day' ).format();
     }
 
     ngOnInit(): void {
@@ -49,11 +71,30 @@ export class CalendarComponent implements OnInit {
     }
 
     selectDay( selectedDay: string ) {
-        if ( isTouchDevice() ) {
-            this.collapseCalendar = true;
+        // if ( isTouchDevice() ) {
+        //     this.collapseCalendar = true;
+        // }
+
+        if ( this.range && this.range.start && dayjs( selectedDay ).isAfter( this.range.start ) ) {
+            this.range.end = dayjs( selectedDay );
+            this.selectedRange.emit( this.range );
+            return;
         }
 
         this.selectedDate.emit( dayjs( selectedDay ) );
+    }
+
+    rangeStart( date: string ) {
+
+        if ( this.range?.start ) {
+            this.range = undefined;
+            return;
+        }
+
+        this.range = {
+            start: dayjs( date ),
+            end: dayjs()
+        };
     }
 
     private buildDays(): void {

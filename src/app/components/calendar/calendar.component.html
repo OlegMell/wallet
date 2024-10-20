@@ -1,3 +1,19 @@
+<div class="days-shortcuts">
+  <button
+    type="button"
+    (click)="selectDay(theDayBeforeYesterday)"
+    class="ellipse-item"
+  >
+    Позавчора
+  </button>
+  <button type="button" (click)="selectDay(yesterday)" class="ellipse-item">
+    Вчора
+  </button>
+  <button type="button" (click)="selectDay(today)" class="ellipse-item">
+    Сьогодні
+  </button>
+</div>
+
 @if (!collapseCalendar) {
 <div class="calendar" [class.collapse]="collapseCalendar">
   <div class="calendar__header">
@@ -17,8 +33,11 @@
   <div class="calendar__days">
     @for (day of days; track day) {
     <app-day
+      (rangeStart)="rangeStart($event)"
       (clicked)="selectDay($event)"
       [date]="day"
+      [rangeStartDate]="range?.start!"
+      [rangeEndDate]="range?.end!"
       [currentDate]="currentDate"
     />
     }

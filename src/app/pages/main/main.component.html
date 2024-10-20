@@ -5,7 +5,7 @@
     <h2 class="page-title">
       Витрати @if (selectedDate) {
       <span (click)="handleShowCalendarClick()" class="main__expenses-for">{{
-        "за: " + selectedDate.format("DD.MM.YYYY")
+        "за: " + period
       }}</span>
       }
     </h2>
@@ -21,7 +21,11 @@
 
   <div class="main__content">
     @if (showCalendar) {
-    <app-calendar #calendar (selectedDate)="handleSelectedDate($event)" />
+    <app-calendar
+      #calendar
+      (selectedDate)="handleSelectedDate($event)"
+      (selectedRange)="handleSelectedRange($event)"
+    />
     } @if (showAddExpensesForm) {
     <app-add-expenses-form
       (saveExpenses)="handleSaveExpenses($event)"

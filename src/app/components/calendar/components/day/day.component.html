@@ -1,9 +1,14 @@
-<div class="calendar__days__day"
-[class.today]="isToday"
-[class.weekend]="isWeekend"
-[class.another-month]="isAnotherMonth"
-[class.disabled]="isFutureDate"
-(click)="handleClick()"
+<div
+  class="calendar__days__day"
+  [class.today]="isToday"
+  [class.weekend]="isWeekend"
+  [class.another-month]="isAnotherMonth"
+  [class.disabled]="isFutureDate"
+  [class.range-start]="isRangeStart"
+  [class.range-end]="isRangeEnd"
+  [class.range]="isInRange"
+  (click)="handleClick($event)"
+  (dblclick)="handleDblClick(day)"
 >
   {{ day }}
 </div>

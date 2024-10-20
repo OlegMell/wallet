@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { Expense } from '../../interfaces/expense.interface';
 import { ExpensesRepository } from '../../../store/repositories/expenses-repository.service';
 import dayjs from 'dayjs';
+import { DateRange } from '../../../components/calendar/calendar.component';
 
 
 export const DRUG_STORE_ID = 'yBvK7Atjhsa1VSXd7ucX';
@@ -50,6 +51,14 @@ export class ExpensesService {
         }
 
         return this.repository.getByDate( date, this.authService.fireBaseUser.id )
+    }
+
+    fetchByRange( range: DateRange ): Observable<Expense[]> {
+        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
+            return EMPTY;
+        }
+
+        return this.repository.getByRange( range, this.authService.fireBaseUser.id )
     }
 
     // fetchByMonth(): Observable<Expense[]> {

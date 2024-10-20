@@ -54,4 +54,18 @@
     pointer-events: none;
     background-color: rgba(gray, 0.08);
   }
+
+  &.range-start {
+    background-color: rgba(red, 0.09);
+    border-radius: 50% 0 0 50%;
+  }
+
+  &.range {
+    background-color: rgba(red, 0.09);
+  }
+
+  &.range-end {
+    background-color: rgba(red, 0.09);
+    border-radius: 0 50% 50% 0;
+  }
 }

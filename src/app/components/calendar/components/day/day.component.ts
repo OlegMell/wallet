@@ -14,11 +14,38 @@ dayjs.extend( customParseFormat );
     changeDetection: ChangeDetectionStrategy.OnPush,
 } )
 export class DayComponent {
+
     date = input.required<string>();
 
     currentDate = input.required<dayjs.Dayjs>();
 
+    rangeStartDate = input.required<dayjs.Dayjs | undefined>();
+    rangeEndDate = input.required<dayjs.Dayjs | undefined>();
+
     clicked = output<string>();
+    rangeStart = output<string>();
+
+    get isRangeStart(): boolean {
+        if ( this.rangeStartDate() ) {
+            return dayjs( this.date() ).isSame( this.rangeStartDate() );
+        }
+        return false;
+    }
+
+    get isRangeEnd(): boolean {
+        if ( this.rangeEndDate() ) {
+            return dayjs( this.date() ).isSame( this.rangeEndDate() );
+        }
+        return false;
+    }
+
+    get isInRange(): boolean {
+        if ( this.rangeStartDate() && this.rangeEndDate() ) {
+            return dayjs( this.date() ).isAfter( this.rangeStartDate() )
+                && dayjs( this.date() ).isBefore( this.rangeEndDate() );
+        }
+        return false;
+    }
 
     get isFutureDate(): boolean {
         return dayjs( this.date() ).isAfter( dayjs(), 'date' );
@@ -40,7 +67,11 @@ export class DayComponent {
         return dayjs( this.date() ).date();
     }
 
-    handleClick() {
+    handleClick( e: Event ) {
         this.clicked.emit( this.date() );
+    }
+
+    handleDblClick( day: number ): void {
+        this.rangeStart.emit( this.date() );
     }
 }
