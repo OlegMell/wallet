@@ -14,4 +14,7 @@ import { Header } from './components/header/header.component';
   ],
 } )
 export class AppComponent {
+  constructor() {
+    throw new Error( 'Error' );
+  }
 }

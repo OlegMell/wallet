@@ -18,8 +18,11 @@ export class CategoriesRepository implements RepositoryService<Category> {
 
     private readonly categoriesService: CategoriesFireBaseService = inject( CategoriesFireBaseService );
 
-    getAll(): Observable<Category[]> {
-        return this.categoriesService.getAll();
+    getAll( userId: string ): Observable<Category[]> {
+        return this.categoriesService.getAllByUserId( userId )
+            .pipe(
+                map( ( q ) => this.getDataFromQuerySnapshot( q ) )
+            )
     }
 
     getOne( id: FireBaseId ): Observable<Expense> {
@@ -39,7 +42,7 @@ export class CategoriesRepository implements RepositoryService<Category> {
             const data: T[] = [];
 
             ( q as QuerySnapshot ).forEach( ( doc: DocumentSnapshot ) => {
-                data.push( doc.data() as T );
+                data.push( { id: doc.id, ...doc.data() as T } );
             } );
 
             return data;

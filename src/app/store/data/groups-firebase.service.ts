@@ -7,44 +7,41 @@ import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Expense } from '../../core/interfaces/expense.interface';
 import { addDoc, AggregateQuerySnapshot } from 'firebase/firestore';
 import dayjs from 'dayjs';
+import { Group } from '../../core/interfaces/group.interface';
 
 @Injectable( {
     providedIn: 'root',
 } )
-export class ExpensesFireBaseService implements FireBaseService<Expense> {
+export class GroupsFireBaseService implements FireBaseService<Group> {
 
     private readonly store = inject( Firestore );
 
-    private readonly expensesCollection = collection( this.store, 'expenses' );
+    private readonly groupsCollection = collection( this.store, 'group' );
 
-    getAllByUserId( userId: FireBaseId ): Observable<Expense[] | QuerySnapshot> {
-        if ( userId ) {
-            const q = query( this.expensesCollection, where( "userId", "==", userId ), );
-            return from( getDocs( q ) );
-        } else {
-            return collectionData( this.expensesCollection ) as Observable<Expense[]>;
-        }
+    getAllByUserId( userId: FireBaseId ): Observable<QuerySnapshot> {
+        const q = query( this.groupsCollection, where( "users", "array-contains", userId ) );
+        return from( getDocs( q ) );
     }
 
-    getOne( id: FireBaseId ): Observable<Expense> {
+    getOne( id: FireBaseId ): Observable<Group> {
         return EMPTY;
     }
 
     getBy( ...queryFilter: QueryFieldFilterConstraint[] ): Observable<QuerySnapshot> {
-        const q = query( this.expensesCollection, ...queryFilter );
+        const q = query( this.groupsCollection, ...queryFilter );
         return from( getDocs( q ) );
     }
 
     getSumBy( ...queryFilter: QueryFieldFilterConstraint[] ): Observable<any> {
-        const q = query( this.expensesCollection, ...queryFilter )
+        const q = query( this.groupsCollection, ...queryFilter )
         return from( getAggregateFromServer( q, {
             totalSum: sum( 'sum' )
         } ) );
     }
 
-    add( expense: Partial<Expense> ): Observable<any> {
-        const expenseToCreate = { ...expense };
-        return from( addDoc( this.expensesCollection, expenseToCreate ) );
+    add( group: Partial<Group> ): Observable<any> {
+        const toCreate = { ...group };
+        return from( addDoc( this.groupsCollection, toCreate ) );
     }
 
     update(): Observable<any> {

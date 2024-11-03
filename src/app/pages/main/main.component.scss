@@ -21,8 +21,8 @@
 
   &__header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     padding-bottom: 10px;
   }
 
@@ -48,12 +48,12 @@
   &__content {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between;
+    gap: 50px;
 
     @media screen and (max-width: 400px) {
       align-items: center;
       flex-direction: column;
+      gap: 10px;
     }
   }
 

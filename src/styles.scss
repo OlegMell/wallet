@@ -71,3 +71,64 @@ button {
     @include backgroundPrimaryColor(0.5);
   }
 }
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+}
+
+.dialog {
+  margin: auto;
+  min-height: 200px;
+  min-width: 300px;
+  border: none;
+  border-radius: 8px;
+  position: relative;
+  width: min-content;
+  height: auto;
+  max-width: 800px;
+  max-height: 500px;
+
+  &-header,
+  &-main,
+  &-footer {
+    padding: 10px;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-main {
+  }
+
+  &__close {
+    border: none;
+    background-color: transparent;
+    rotate: 45deg;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 18px;
+    padding: 2px;
+    cursor: pointer;
+  }
+}
+
+.form-control {
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  input,
+  select {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: toRem(18);
+    border: 1px solid rgba($color: #000000, $alpha: 0.2);
+    background-color: rgba($color: white, $alpha: 0.5);
+  }
+}

@@ -17,7 +17,7 @@ export class ShopsRepository implements RepositoryService<Shop> {
     private readonly shopsService: ShopsFireBaseService = inject( ShopsFireBaseService );
 
     getAll(): Observable<Shop[]> {
-        return this.shopsService.getAll();
+        return this.shopsService.getAllByUserId();
     }
 
     getOne( id: FireBaseId ): Observable<Expense> {

@@ -8,6 +8,7 @@ import { ShopsService } from '../../core/features/shops/shops.service';
 import { CategoriesService } from '../../core/features/categories/categories.service';
 import { CurrencyService } from '../../core/features/currency/currency.service';
 import { CurrencyComponent } from "../currency/currency.component";
+import { GroupsService as GroupsService } from '../../core/features/groups/groups.service';
 
 @Component( {
     standalone: true,
@@ -16,9 +17,9 @@ import { CurrencyComponent } from "../currency/currency.component";
     styleUrl: './header.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-    AsyncPipe,
-    CurrencyComponent
-]
+        AsyncPipe,
+        CurrencyComponent
+    ]
 } )
 export class Header implements OnInit {
     readonly authService: AuthService = inject( AuthService );
@@ -28,10 +29,11 @@ export class Header implements OnInit {
     readonly usersRepository: UsersRepository = inject( UsersRepository );
     readonly cd: ChangeDetectorRef = inject( ChangeDetectorRef );
     readonly currencyService: CurrencyService = inject( CurrencyService );
+    readonly groupsService: GroupsService = inject( GroupsService );
 
     constructor() {
         effect( () => {
-            if ( this.authService.currentGoogleUser() ) {
+            if ( this.authService.currentGoogleUser() && this.authService.fireBaseUser() ) {
                 this.fetchInitialData();
             }
         } )
@@ -56,6 +58,7 @@ export class Header implements OnInit {
     private fetchInitialData() {
         this.categoriesService.fetchData();
         this.shopsService.fetchData();
+        this.groupsService.fetchData();
         this.cd.markForCheck();
     }
 }

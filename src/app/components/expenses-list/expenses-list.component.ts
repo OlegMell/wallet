@@ -3,6 +3,7 @@ import { first } from 'rxjs';
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, effect, inject, input,
+  OnInit,
   signal, WritableSignal
 } from '@angular/core';
 
@@ -13,6 +14,7 @@ import { Category } from '../../core/interfaces/category.interface';
 import { ShopsService } from '../../core/features/shops/shops.service';
 import { TotalAmountComponent } from '../total-amount/total-amount.component';
 import { CATEGORIES } from '../../core/categories.enum';
+import { GroupsService } from '../../core/features/groups/groups.service';
 
 
 @Component( {
@@ -23,7 +25,7 @@ import { CATEGORIES } from '../../core/categories.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ TotalAmountComponent ],
 } )
-export class ExpensesListComponent {
+export class ExpensesListComponent implements OnInit {
 
   expenses = input.required<Expense[]>();
 
@@ -32,6 +34,7 @@ export class ExpensesListComponent {
   private readonly categoriesService: CategoriesService = inject( CategoriesService );
   private readonly shopsService: ShopsService = inject( ShopsService );
   private readonly cd: ChangeDetectorRef = inject( ChangeDetectorRef );
+  private readonly groupsService: GroupsService = inject( GroupsService );
 
   expensesByCategoryMap = new Map();
   expensesByShopMap = new Map();
@@ -56,6 +59,12 @@ export class ExpensesListComponent {
         this.mapExpensesByShop();
       }
     }, { allowSignalWrites: true } )
+  }
+
+  ngOnInit(): void {
+    this.groupsService.groups.subscribe( s => {
+      console.log( s )
+    } )
   }
 
   handleCategoryTotal( category: Category ): void {
@@ -113,6 +122,8 @@ export class ExpensesListComponent {
     this.categoriesService.categories
       .pipe( first() )
       .subscribe( ( categories: Category[] ) => {
+
+        console.log( categories )
 
         this.expensesByCategoryMap = new Map();
 

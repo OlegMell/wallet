@@ -1,6 +1,6 @@
 import { from, of, switchMap, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { effect, inject, Injectable, Signal } from '@angular/core';
+import { effect, inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { Auth, GoogleAuthProvider, signInWithPopup, signOut, User, user } from '@angular/fire/auth';
 
@@ -34,7 +34,7 @@ export class AuthService {
                             }
                         } )
                     ).subscribe( ( res: DocumentSnapshot ) => {
-                        this.fireBaseUser = res;
+                        this.fireBaseUser.set( res );
                     } )
             }
         } );
@@ -42,7 +42,7 @@ export class AuthService {
 
     authenticatedUser: any;
 
-    fireBaseUser!: DocumentSnapshot;
+    fireBaseUser: WritableSignal<DocumentSnapshot | undefined> = signal( undefined )
 
     get user() {
         return this.auth.currentUser;
@@ -61,7 +61,7 @@ export class AuthService {
                         }
                     } )
                 ) ),
-                tap( ( user: DocumentSnapshot ) => this.fireBaseUser = user )
+                tap( ( user: DocumentSnapshot ) => this.fireBaseUser.set( user ) )
             );
     }
 

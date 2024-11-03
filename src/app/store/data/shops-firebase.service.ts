@@ -17,7 +17,7 @@ export class ShopsFireBaseService implements FireBaseService<any> {
 
     private readonly collection = collection( this.store, 'shops' );
 
-    getAll(): Observable<Shop[]> {
+    getAllByUserId(): Observable<Shop[]> {
         return collectionData( this.collection, {
             idField: 'id'
         } ) as Observable<any[]>;

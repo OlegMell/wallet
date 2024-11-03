@@ -5,7 +5,7 @@ import { FireBaseId } from '../../core/types/firebase-id.type';
 
 export interface FireBaseService<T> {
 
-    getAll( userId?: FireBaseId ): Observable<T[] | QuerySnapshot>;
+    getAllByUserId( userId?: FireBaseId ): Observable<T[] | QuerySnapshot>;
     getOne( id: FireBaseId ): Observable<T>;
     add( entity: Partial<T> ): Observable<any>;
     update(): Observable<any>;

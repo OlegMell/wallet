@@ -27,7 +27,7 @@ export class ExpensesService {
     }
 
     fetchData(): void {
-        this.#expenses = this.repository.getAll( this.authService.fireBaseUser.id )
+        this.#expenses = this.repository.getAll( this.authService.fireBaseUser()!.id )
             .pipe(
                 map( ( querySnapshot ) => {
                     if ( ( querySnapshot as QuerySnapshot ).size ) {
@@ -46,19 +46,19 @@ export class ExpensesService {
     }
 
     fetchByDate( date: string ): Observable<Expense[]> {
-        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
+        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser()?.id! ) {
             return EMPTY;
         }
 
-        return this.repository.getByDate( date, this.authService.fireBaseUser.id )
+        return this.repository.getByDate( date, this.authService.fireBaseUser()?.id! )
     }
 
     fetchByRange( range: DateRange ): Observable<Expense[]> {
-        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
+        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser()?.id ) {
             return EMPTY;
         }
 
-        return this.repository.getByRange( range, this.authService.fireBaseUser.id )
+        return this.repository.getByRange( range, this.authService.fireBaseUser()?.id! )
     }
 
     // fetchByMonth(): Observable<Expense[]> {
@@ -70,12 +70,12 @@ export class ExpensesService {
     // }
 
     getSumForMonth(): Observable<number> {
-        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser.id ) {
+        if ( !this.authService.fireBaseUser || !this.authService.fireBaseUser()!.id ) {
             return EMPTY;
         }
 
         return this.repository.getSumByDateRange( dayjs().startOf( 'month' ).format( 'DD.MM.YYYY' ),
-            dayjs().endOf( 'month' ).format( 'DD.MM.YYYY' ), this.authService.fireBaseUser.id )
+            dayjs().endOf( 'month' ).format( 'DD.MM.YYYY' ), this.authService.fireBaseUser()!.id )
     }
 
     create( expenses: { shop: string, expenses: Partial<Expense>[] }, date: dayjs.Dayjs ): Observable<any> {
@@ -84,7 +84,7 @@ export class ExpensesService {
                 switchMap( ( expense ) => this.repository.add( {
                     ...expense,
                     shopId: isMedicineCategory( expense.categoryId ) ? DRUG_STORE_ID : expenses.shop,
-                    userId: this.authService.fireBaseUser.id,
+                    userId: this.authService.fireBaseUser()?.id,
                     date: date.format( 'DD.MM.YYYY' ),
                     sum: expense.sum ? +expense.sum : 0
                 } ) )

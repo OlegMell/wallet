@@ -1,7 +1,9 @@
 <div class="main">
   <div class="blur"></div>
-  @if (authService.currentGoogleUser() && authService.fireBaseUser) {
+  @if (authService.currentGoogleUser() && authService.fireBaseUser()) {
   <div class="main__header">
+    <app-groups />
+
     <h2 class="page-title">
       Витрати @if (selectedDate) {
       <span (click)="handleShowCalendarClick()" class="main__expenses-for">{{

@@ -1,35 +1,36 @@
 import { EMPTY, map, Observable, of, shareReplay, tap } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 
 import { AuthService } from '../auth/auth.service';
 import { CategoriesRepository } from '../../../store/repositories/categories-repository.service';
 import { Category } from '../../interfaces/category.interface';
-import { Auth } from '@angular/fire/auth';
+import { Group } from '../../interfaces/group.interface';
+import { GroupsRepository } from '../../../store/repositories/groups-repository.service';
 
 @Injectable( {
     providedIn: 'root'
 } )
-export class CategoriesService {
+export class GroupsService {
 
-    private readonly auth = inject( Auth );
     private readonly authService: AuthService = inject( AuthService );
-    private readonly repository: CategoriesRepository = inject( CategoriesRepository );
+    private readonly repository: GroupsRepository = inject( GroupsRepository );
 
-    #categories: Observable<Category[]> = of( [] );
+    #groups: Observable<Group[]> = of( [] );
 
-    get categories(): Observable<Category[]> {
-        return this.#categories;
+    get groups(): Observable<Group[]> {
+        return this.#groups;
     }
 
     fetchData(): void {
-        this.#categories = this.repository.getAll( this.authService.fireBaseUser()!.id ).pipe(
+        this.#groups = this.repository.getAll( this.authService.fireBaseUser()!.id ).pipe(
             shareReplay()
         );
     }
 
     clearData(): void {
-        this.#categories = EMPTY;
+        this.#groups = EMPTY;
     }
 
 }

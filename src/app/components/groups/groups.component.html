@@ -1,0 +1,51 @@
+<div class="groups">
+  <h3 class="groups__title">
+    Групи
+    <button class="groups__add-button" (click)="showAddGroupDialog()">+</button>
+  </h3>
+  <div class="groups__container">
+    @for (group of (groupsService.groups | async); track group.name) {
+    <div class="group">{{ group.name }}</div>
+    }
+  </div>
+</div>
+
+<dialog #dialog class="dialog">
+  <header class="dialog-header">
+    <button
+      class="dialog__close"
+      type="button"
+      aria-label="Закрити вікно"
+      (click)="closeDialog()"
+    >
+      +
+    </button>
+    <h3 class="dialog__title">Додати групу</h3>
+  </header>
+  <main class="dialog-main">
+    <form [formGroup]="addGroupForm">
+      <div class="form-control">
+        <label>
+          Назва групи
+          <input type="text" formControlName="name" />
+        </label>
+      </div>
+      <div class="form-control">
+        <label>
+          Учасники
+          <input
+            placeholder="email, email, email, ..."
+            type="text"
+            formControlName="users"
+          />
+        </label>
+      </div>
+    </form>
+  </main>
+  <footer>
+    <button class="submit-button" (click)="addGroupSubmit()">Зберегти</button>
+    <button class="submit-button" type="button" (click)="closeDialog()">
+      Скасувати
+    </button>
+  </footer>
+</dialog>

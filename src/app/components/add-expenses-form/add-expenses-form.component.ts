@@ -103,7 +103,7 @@ export class AddExpensesFormComponent implements OnInit {
 
     setTimeout( () => {
       this.formContainer()!.nativeElement!.scrollTop = this.formContainer()?.nativeElement?.scrollHeight!;
-    } )
+    } );
   }
 
   saveForm(): void {

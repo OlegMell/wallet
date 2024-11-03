@@ -17,9 +17,14 @@ export class CategoriesFireBaseService implements FireBaseService<any> {
 
     private readonly collection = collection( this.store, 'categories' );
 
+    getAllByUserId( userId: FireBaseId ): Observable<QuerySnapshot> {
+        const q = query( this.collection, where( "owner", "in", [ userId, 'common' ] ) );
+        return from( getDocs( q ) );
+    }
+
     getAll(): Observable<Category[]> {
         return collectionData( this.collection, {
-            idField: 'id'
+            idField: 'id',
         } ) as Observable<any[]>;
     }
 

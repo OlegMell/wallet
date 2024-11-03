@@ -64,4 +64,8 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+
+  @media (width < "450px") {
+    justify-content: center;
+  }
 }

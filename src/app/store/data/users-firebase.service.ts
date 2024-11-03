@@ -16,7 +16,7 @@ export class UsersFireBaseService implements FireBaseService<any> {
 
     private readonly usersCollection = collection( this.store, 'users' );
 
-    getAll(): Observable<Expense[]> {
+    getAllByUserId(): Observable<Expense[]> {
         return collectionData( this.usersCollection ) as Observable<any[]>;
     }
 

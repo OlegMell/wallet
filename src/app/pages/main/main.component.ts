@@ -1,3 +1,4 @@
+import { GroupsService } from './../../core/features/groups/groups.service';
 import dayjs from 'dayjs';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit, viewChild } from '@angular/core';
 
@@ -8,6 +9,7 @@ import { Expense } from '../../core/interfaces/expense.interface';
 import { ExpensesListComponent } from "../../components/expenses-list/expenses-list.component";
 import { isTouchDevice } from '../../core/utilities';
 import { AuthService } from '../../core/features/auth/auth.service';
+import { GroupsComponent } from "../../components/groups/groups.component";
 
 
 @Component( {
@@ -18,8 +20,9 @@ import { AuthService } from '../../core/features/auth/auth.service';
   imports: [
     CalendarComponent,
     AddExpensesFormComponent,
-    ExpensesListComponent
-  ],
+    ExpensesListComponent,
+    GroupsComponent
+],
 } )
 export class MainComponent implements OnInit {
 

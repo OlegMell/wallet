@@ -17,7 +17,7 @@ export class ExpensesRepository implements RepositoryService<Expense> {
     private readonly expensesService: ExpensesFireBaseService = inject( ExpensesFireBaseService );
 
     getAll( userId: FireBaseId ): Observable<Expense[] | QuerySnapshot> {
-        return this.expensesService.getAll( userId );
+        return this.expensesService.getAllByUserId( userId );
     }
 
     getByDate( date: string, userId: FireBaseId ): Observable<Expense[]> {
