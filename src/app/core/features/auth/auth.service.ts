@@ -70,7 +70,7 @@ export class AuthService {
         } )
     }
 
-    private findUser( userEmail?: string ) {
+    findUser( userEmail?: string ) {
         return this.usersRepository.getOne( userEmail || this.user?.email! );
     }
 

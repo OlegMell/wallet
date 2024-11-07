@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, effect, inject, input,
   OnInit,
+  output,
   signal, WritableSignal
 } from '@angular/core';
 
@@ -26,8 +27,11 @@ import { GroupsService } from '../../core/features/groups/groups.service';
   imports: [ TotalAmountComponent ],
 } )
 export class ExpensesListComponent implements OnInit {
+  showAddExpensesForm: any;
 
   expenses = input.required<Expense[]>();
+
+  showAddExpencesFormClicked = output();
 
   displayedExpenses: WritableSignal<Expense[]> = signal( [] );
 
@@ -65,6 +69,10 @@ export class ExpensesListComponent implements OnInit {
     this.groupsService.groups.subscribe( s => {
       console.log( s )
     } )
+  }
+
+  handleAddExpense(): void {
+    this.showAddExpencesFormClicked.emit();
   }
 
   handleCategoryTotal( category: Category ): void {

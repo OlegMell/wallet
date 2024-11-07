@@ -17,12 +17,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 } )
 export class GroupsComponent implements OnInit {
 
-
   dialog = viewChild<ElementRef<HTMLDialogElement>>( 'dialog' );
+  addGroupForm!: FormGroup;
 
   private readonly cd: ChangeDetectorRef = inject( ChangeDetectorRef );
   public readonly groupsService: GroupsService = inject( GroupsService );
-  addGroupForm!: FormGroup;
+
 
   ngOnInit(): void {
     this.addGroupForm = new FormGroup( {
@@ -40,7 +40,11 @@ export class GroupsComponent implements OnInit {
   }
 
   addGroupSubmit() {
-    console.log( this.addGroupForm.value );
+    this.groupsService.addGroup( this.addGroupForm.value )
+      .subscribe( ( res ) => {
+        this.closeDialog();
+        this.groupsService.fetchData();
+      } )
   }
 
 }

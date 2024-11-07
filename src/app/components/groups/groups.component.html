@@ -27,14 +27,14 @@
       <div class="form-control">
         <label>
           Назва групи
-          <input type="text" formControlName="name" />
+          <input type="text" placeholder="Введіть назву групи" formControlName="name" />
         </label>
       </div>
       <div class="form-control">
         <label>
           Учасники
           <input
-            placeholder="email, email, email, ..."
+            placeholder="Email, email ..."
             type="text"
             formControlName="users"
           />
@@ -42,7 +42,7 @@
       </div>
     </form>
   </main>
-  <footer>
+  <footer class="dialog-footer">
     <button class="submit-button" (click)="addGroupSubmit()">Зберегти</button>
     <button class="submit-button" type="button" (click)="closeDialog()">
       Скасувати

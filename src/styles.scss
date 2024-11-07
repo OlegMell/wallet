@@ -79,8 +79,8 @@ dialog::backdrop {
 
 .dialog {
   margin: auto;
-  min-height: 200px;
-  min-width: 300px;
+  min-height: min-content;
+  min-width: 400px;
   border: none;
   border-radius: 8px;
   position: relative;
@@ -88,11 +88,18 @@ dialog::backdrop {
   height: auto;
   max-width: 800px;
   max-height: 500px;
+  background-color: rgba($color: #ffffff, $alpha: .8);
 
   &-header,
   &-main,
   &-footer {
     padding: 10px;
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
   }
 
   &-header {
