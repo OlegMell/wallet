@@ -5,7 +5,10 @@
   </h3>
   <div class="groups__container">
     @for (group of (groupsService.groups | async); track group.name) {
-    <div class="group">{{ group.name }}</div>
+      <button type="button"
+              class="group"
+              (click)="selectGroup(group)"
+      >{{ group.name }}</button>
     }
   </div>
 </div>

@@ -1,49 +1,55 @@
 <div class="main">
   <div class="blur"></div>
   @if (authService.currentGoogleUser() && authService.fireBaseUser()) {
-  <div class="main__header">
-    <app-groups />
+    <div class="main__header">
 
-    <h2 class="page-title">
-      Витрати @if (selectedDate) {
-      <span (click)="handleShowCalendarClick()" class="main__expenses-for">{{
-        "за: " + period
-      }}</span>
+      <h2 class="page-title">
+        Витрати
+        @if (selectedDate) {
+          <span (click)="handleShowCalendarClick()" class="main__expenses-for">{{
+              "за: " + period
+            }}</span>
+        }
+      </h2>
+
+      <button
+        (click)="handleAddExpense()"
+        title="Додати витрати"
+        class="main__add-expense-button"
+      >
+        {{ showAddExpensesForm ? "-" : "+" }}
+      </button>
+    </div>
+
+    <div class="main__content">
+
+      <section>
+        <app-groups/>
+      </section>
+
+      @if (showCalendar) {
+        <app-calendar
+          #calendar
+          (selectedDate)="handleSelectedDate($event)"
+          (selectedRange)="handleSelectedRange($event)"
+        />
       }
-    </h2>
-
-    <button
-      (click)="handleAddExpense()"
-      title="Додати витрати"
-      class="main__add-expense-button"
-    >
-      {{ showAddExpensesForm ? "-" : "+" }}
-    </button>
-  </div>
-
-  <div class="main__content">
-    @if (showCalendar) {
-    <app-calendar
-      #calendar
-      (selectedDate)="handleSelectedDate($event)"
-      (selectedRange)="handleSelectedRange($event)"
-    />
-    } @if (showAddExpensesForm) {
-    <app-add-expenses-form
-      (saveExpenses)="handleSaveExpenses($event)"
-      [date]="selectedDate ? selectedDate.format('DD.MM.YYYY') : today"
-    />
-    } @else {
-    <app-expenses-list [expenses]="expenses" />
-    }
-  </div>
+      @if (showAddExpensesForm) {
+        <app-add-expenses-form
+          (saveExpenses)="handleSaveExpenses($event)"
+          [date]="selectedDate ? selectedDate.format('DD.MM.YYYY') : today"
+        />
+      } @else {
+        <app-expenses-list [expenses]="expenses"/>
+      }
+    </div>
   } @else if (authService.currentGoogleUser() === undefined) {
-  <div class="loader"></div>
-  } @else if(authService.currentGoogleUser() === null) {
-  <div class="main__start-page">
-    <img src="./icons/wallet.png" alt="welcom icon" />
-  </div>
-  <br />
-  <h3 style="text-align: center">Зайдіть у свій аккаунт)</h3>
+    <div class="loader"></div>
+  } @else if (authService.currentGoogleUser() === null) {
+    <div class="main__start-page">
+      <img src="./icons/wallet.png" alt="welcom icon"/>
+    </div>
+    <br/>
+    <h3 style="text-align: center">Зайдіть у свій аккаунт)</h3>
   }
 </div>

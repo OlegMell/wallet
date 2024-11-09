@@ -7,29 +7,30 @@ import { CategoriesRepository } from '../../../store/repositories/categories-rep
 import { Category } from '../../interfaces/category.interface';
 import { Auth } from '@angular/fire/auth';
 
-@Injectable( {
-    providedIn: 'root'
-} )
+@Injectable({
+  providedIn: 'root'
+})
 export class CategoriesService {
 
-    private readonly auth = inject( Auth );
-    private readonly authService: AuthService = inject( AuthService );
-    private readonly repository: CategoriesRepository = inject( CategoriesRepository );
+  private readonly auth = inject(Auth);
+  private readonly authService: AuthService = inject(AuthService);
+  private readonly repository: CategoriesRepository = inject(CategoriesRepository);
 
-    #categories: Observable<Category[]> = of( [] );
+  #categories: Observable<Category[]> = of([]);
 
-    get categories(): Observable<Category[]> {
-        return this.#categories;
-    }
+  get categories(): Observable<Category[]> {
+    return this.#categories;
+  }
 
-    fetchData(): void {
-        this.#categories = this.repository.getAll( this.authService.fireBaseUser()!.id ).pipe(
-            shareReplay()
-        );
-    }
+  fetchData(): void {
+    this.#categories = this.repository.getAll(this.authService.fireBaseUser()!.id).pipe(
+      shareReplay(),
+      tap(() => console.log('SHARE'))
+    );
+  }
 
-    clearData(): void {
-        this.#categories = EMPTY;
-    }
+  clearData(): void {
+    this.#categories = EMPTY;
+  }
 
 }

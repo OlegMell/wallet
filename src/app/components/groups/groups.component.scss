@@ -7,10 +7,12 @@
 
   &__container {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     align-items: center;
     margin-bottom: 20px;
     overflow-x: auto;
+    border-right: 1px solid grey;
   }
 
   .group,

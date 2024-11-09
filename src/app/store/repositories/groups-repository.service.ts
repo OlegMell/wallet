@@ -1,12 +1,8 @@
-import { EMPTY, map, Observable, retry, tap } from 'rxjs';
+import { EMPTY, map, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { AggregateQuerySnapshot, and, DocumentSnapshot, QuerySnapshot, sum, where } from '@angular/fire/firestore';
-import dayjs from 'dayjs';
+import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { RepositoryService } from './repository-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
-import { Expense } from '../../core/interfaces/expense.interface';
-import { ExpensesFireBaseService } from '../data/expenses.service';
-import { DateRange } from '../../components/calendar/calendar.component';
 import { Group } from '../../core/interfaces/group.interface';
 import { GroupsFireBaseService } from '../data/groups-firebase.service';
 
@@ -42,10 +38,11 @@ export class GroupsRepository implements RepositoryService<Group> {
 
             ( q as QuerySnapshot ).forEach( ( doc: DocumentSnapshot ) => {
                 console.log( doc.data() )
-                data.push( doc.data() as T );
+                data.push({ id: doc.id, ...doc.data() } as T );
             } );
 
-            return data;
+          console.log(data);
+          return data;
         }
 
         return [];
