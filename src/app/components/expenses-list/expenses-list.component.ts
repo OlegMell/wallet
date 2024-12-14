@@ -1,20 +1,23 @@
 import { first } from 'rxjs';
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, effect, inject, input,
-  OnInit,
-  output,
-  signal, WritableSignal
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+  input,
+  signal,
+  WritableSignal
 } from '@angular/core';
 
+import { CATEGORIES } from '../../core/categories.enum';
 import { Shop } from '../../core/interfaces/shop.interface';
 import { Expense } from '../../core/interfaces/expense.interface';
-import { CategoriesService } from '../../core/features/categories/categories.service';
 import { Category } from '../../core/interfaces/category.interface';
 import { ShopsService } from '../../core/features/shops/shops.service';
-import { TotalAmountComponent } from '../total-amount/total-amount.component';
-import { CATEGORIES } from '../../core/categories.enum';
 import { GroupsService } from '../../core/features/groups/groups.service';
+import { TotalAmountComponent } from '../total-amount/total-amount.component';
+import { CategoriesService } from '../../core/features/categories/categories.service';
 
 
 @Component({
@@ -25,9 +28,7 @@ import { GroupsService } from '../../core/features/groups/groups.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ TotalAmountComponent ],
 })
-export class ExpensesListComponent implements OnInit {
-  showAddExpensesForm: any;
-
+export class ExpensesListComponent {
   expenses = input.required<Expense[]>();
 
   displayedExpenses: WritableSignal<Expense[]> = signal([]);
@@ -62,12 +63,6 @@ export class ExpensesListComponent implements OnInit {
         this.mapExpensesByShop();
       }
     }, { allowSignalWrites: true })
-  }
-
-  ngOnInit(): void {
-    this.groupsService.groups.subscribe(s => {
-      console.log(s)
-    })
   }
 
   handleCategoryTotal(category: Category): void {
@@ -125,9 +120,6 @@ export class ExpensesListComponent implements OnInit {
     this.categoriesService.categories
       .pipe(first())
       .subscribe((categories: Category[]) => {
-
-        console.log(categories)
-
         this.expensesByCategoryMap = new Map();
 
         categories.forEach((category: Category) => {

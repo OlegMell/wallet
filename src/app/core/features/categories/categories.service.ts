@@ -1,11 +1,10 @@
-import { EMPTY, map, Observable, of, shareReplay, tap } from 'rxjs';
+import { Auth } from '@angular/fire/auth';
 import { inject, Injectable } from '@angular/core';
-import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { EMPTY, Observable, of, shareReplay, tap } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
-import { CategoriesRepository } from '../../../store/repositories/categories-repository.service';
 import { Category } from '../../interfaces/category.interface';
-import { Auth } from '@angular/fire/auth';
+import { CategoriesRepository } from '../../../store/repositories/categories-repository.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,12 +1,12 @@
-import { EMPTY, map, Observable, retry } from 'rxjs';
+import dayjs from 'dayjs';
+import { EMPTY, map, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { AggregateQuerySnapshot, and, DocumentSnapshot, QuerySnapshot, sum, where } from '@angular/fire/firestore';
+import { DocumentSnapshot, QuerySnapshot, where } from '@angular/fire/firestore';
 
 import { RepositoryService } from './repository-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Expense } from '../../core/interfaces/expense.interface';
 import { ExpensesFireBaseService } from '../data/expenses.service';
-import dayjs from 'dayjs';
 import { DateRange } from '../../components/calendar/calendar.component';
 
 @Injectable( {

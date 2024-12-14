@@ -1,13 +1,13 @@
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideServiceWorker } from '@angular/service-worker';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, isDevMode } from '@angular/core';
+import { ApplicationConfig, isDevMode, provideZoneChangeDetection } from '@angular/core';
 
 import { routes } from './app.routes';
 import { firebaseConfig } from './core/firebase.config';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-import { provideHttpClient } from '@angular/common/http';
-import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -1,12 +1,12 @@
-import { EMPTY, from, map, Observable, of, switchMap } from 'rxjs';
+import dayjs from 'dayjs';
 import { inject, Injectable } from '@angular/core';
+import { EMPTY, from, map, Observable, of, switchMap } from 'rxjs';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 
 import { AuthService } from '../auth/auth.service';
 import { Expense } from '../../interfaces/expense.interface';
-import { ExpensesRepository } from '../../../store/repositories/expenses-repository.service';
-import dayjs from 'dayjs';
 import { DateRange } from '../../../components/calendar/calendar.component';
+import { ExpensesRepository } from '../../../store/repositories/expenses-repository.service';
 
 
 export const DRUG_STORE_ID = 'yBvK7Atjhsa1VSXd7ucX';

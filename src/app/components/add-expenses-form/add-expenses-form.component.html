@@ -6,7 +6,7 @@
         <span>Магазин</span>
         <select formControlName="shop" type="text">
           @for (shop of (shopsService.shops | async); track shop.id) {
-          <option [value]="shop.id">{{ shop.title }}</option>
+            <option [value]="shop.id">{{ shop.title }}</option>
           }
         </select>
       </label>
@@ -15,7 +15,7 @@
     <div class="expenses" formArrayName="expenses">
       <ng-container *ngFor="let i of expenses; let idx = index" [formGroup]="i">
         @if (idx >= 1) {
-        <button class="remove-button" (click)="removeExpense(idx)">-</button>
+          <button class="remove-button" (click)="removeExpense(idx)">-</button>
         }
 
         <div class="form-control">
@@ -23,8 +23,8 @@
             <span>Категорія</span>
             <select formControlName="categoryId">
               @for (category of (categoriesService.categories | async); track
-              category.id) {
-              <option [value]="category.id">{{ category.title }}</option>
+                category.id) {
+                <option [value]="category.id">{{ category.title }}</option>
               }
             </select>
           </label>
@@ -44,7 +44,7 @@
         <div class="form-control">
           <label сlass="form-control__label">
             <span>Сума</span>
-            <input placeholder="0.0" formControlName="sum" type="text" />
+            <input placeholder="0.0" formControlName="sum" type="text"/>
           </label>
         </div>
       </ng-container>

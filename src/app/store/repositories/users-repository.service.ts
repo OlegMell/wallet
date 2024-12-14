@@ -1,10 +1,10 @@
 import { EMPTY, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
+import { QuerySnapshot } from 'firebase/firestore';
 
 import { RepositoryService } from './repository-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { UsersFireBaseService } from '../data/users-firebase.service';
-import { DocumentSnapshot, QuerySnapshot } from 'firebase/firestore';
 
 @Injectable( {
     providedIn: 'root'

@@ -1,11 +1,10 @@
-import { EMPTY, from, Observable, of } from 'rxjs';
+import { EMPTY, from, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, Firestore, doc, getDoc, addDoc, DocumentReference, DocumentSnapshot, query, where } from '@angular/fire/firestore';
+import { getDocs, QuerySnapshot } from 'firebase/firestore';
+import { addDoc, collection, collectionData, Firestore, query, where } from '@angular/fire/firestore';
 
 import { FireBaseService } from './firebase-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
-import { Expense } from '../../core/interfaces/expense.interface';
-import { getDocs, QuerySnapshot } from 'firebase/firestore';
 import { Category } from '../../core/interfaces/category.interface';
 
 @Injectable( {

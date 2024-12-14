@@ -1,13 +1,13 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
 
-import { AuthService } from '../../core/features/auth/auth.service';
-import { UsersRepository } from '../../store/repositories/users-repository.service';
-import { ExpensesService } from '../../core/features/expenses/expenses.service';
-import { ShopsService } from '../../core/features/shops/shops.service';
-import { CategoriesService } from '../../core/features/categories/categories.service';
-import { CurrencyService } from '../../core/features/currency/currency.service';
 import { CurrencyComponent } from "../currency/currency.component";
+import { AuthService } from '../../core/features/auth/auth.service';
+import { ShopsService } from '../../core/features/shops/shops.service';
+import { ExpensesService } from '../../core/features/expenses/expenses.service';
+import { CurrencyService } from '../../core/features/currency/currency.service';
+import { UsersRepository } from '../../store/repositories/users-repository.service';
+import { CategoriesService } from '../../core/features/categories/categories.service';
 import { GroupsService as GroupsService } from '../../core/features/groups/groups.service';
 
 @Component({
@@ -51,11 +51,11 @@ export class Header implements OnInit {
       });
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
   }
 
-  private fetchInitialData() {
+  private fetchInitialData(): void {
     this.categoriesService.fetchData();
     this.shopsService.fetchData();
     this.groupsService.fetchData();

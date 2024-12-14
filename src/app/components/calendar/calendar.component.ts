@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, output } from '@angular/core';
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, output } from '@angular/core';
 
 import { Month, Week, WeekDay } from '../../core/consts';
 import { DayComponent } from "./components/day/day.component";

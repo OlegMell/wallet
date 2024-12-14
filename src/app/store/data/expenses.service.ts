@@ -1,12 +1,22 @@
 import { EMPTY, from, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, Firestore, getAggregateFromServer, getDocs, Query, query, QueryFieldFilterConstraint, QuerySnapshot, sum, where } from '@angular/fire/firestore';
+import {
+  collection,
+  collectionData,
+  Firestore,
+  getAggregateFromServer,
+  getDocs,
+  query,
+  QueryFieldFilterConstraint,
+  QuerySnapshot,
+  sum,
+  where
+} from '@angular/fire/firestore';
+import { addDoc } from 'firebase/firestore';
 
 import { FireBaseService } from './firebase-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Expense } from '../../core/interfaces/expense.interface';
-import { addDoc, AggregateQuerySnapshot } from 'firebase/firestore';
-import dayjs from 'dayjs';
 
 @Injectable( {
     providedIn: 'root',

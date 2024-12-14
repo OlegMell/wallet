@@ -1,6 +1,7 @@
 import { EMPTY, map, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+
 import { RepositoryService } from './repository-service';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Group } from '../../core/interfaces/group.interface';

@@ -2,8 +2,7 @@
   <button
     type="button"
     (click)="selectDay(theDayBeforeYesterday)"
-    class="ellipse-item"
-  >
+    class="ellipse-item">
     Позавчора
   </button>
   <button type="button" (click)="selectDay(yesterday)" class="ellipse-item">
@@ -15,32 +14,32 @@
 </div>
 
 @if (!collapseCalendar) {
-<div class="calendar" [class.collapse]="collapseCalendar">
-  <div class="calendar__header">
-    <button class="arrow-btn arrow-btn-left" (click)="prevMonth()"></button>
-    <div class="calendar__header__month">
-      {{ currentMonth }} - {{ currentDate.year() }}
+  <div class="calendar" [class.collapse]="collapseCalendar">
+    <div class="calendar__header">
+      <button class="arrow-btn arrow-btn-left" (click)="prevMonth()"></button>
+      <div class="calendar__header__month">
+        {{ currentMonth }} - {{ currentDate.year() }}
+      </div>
+      <button class="arrow-btn arrow-btn-right" (click)="nextMonth()"></button>
     </div>
-    <button class="arrow-btn arrow-btn-right" (click)="nextMonth()"></button>
-  </div>
-  <div class="calendar__week">
-    @for (w of week; track w) {
-    <div class="calendar__week__title">
-      {{ w }}
+    <div class="calendar__week">
+      @for (w of week; track w) {
+        <div class="calendar__week__title">
+          {{ w }}
+        </div>
+      }
     </div>
-    }
+    <div class="calendar__days">
+      @for (day of days; track day) {
+        <app-day
+          (rangeStart)="rangeStart($event)"
+          (clicked)="selectDay($event)"
+          [date]="day"
+          [rangeStartDate]="range?.start!"
+          [rangeEndDate]="range?.end!"
+          [currentDate]="currentDate"
+        />
+      }
+    </div>
   </div>
-  <div class="calendar__days">
-    @for (day of days; track day) {
-    <app-day
-      (rangeStart)="rangeStart($event)"
-      (clicked)="selectDay($event)"
-      [date]="day"
-      [rangeStartDate]="range?.start!"
-      [rangeEndDate]="range?.end!"
-      [currentDate]="currentDate"
-    />
-    }
-  </div>
-</div>
 }

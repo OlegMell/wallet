@@ -1,11 +1,7 @@
-import { EMPTY, map, Observable, of, scan, shareReplay, switchMap, tap } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
-import { Auth } from '@angular/fire/auth';
+import { EMPTY, map, Observable, of, scan, shareReplay, switchMap } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
-import { CategoriesRepository } from '../../../store/repositories/categories-repository.service';
-import { Category } from '../../interfaces/category.interface';
 import { Group } from '../../interfaces/group.interface';
 import { GroupsRepository } from '../../../store/repositories/groups-repository.service';
 

@@ -2,7 +2,7 @@ import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import { Currency } from './../../interfaces/currency.interface';
+import { Currency } from '../../interfaces/currency.interface';
 
 export const CurrencyURL: string = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json';
 

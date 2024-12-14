@@ -1,13 +1,12 @@
-import { EMPTY, map, Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { DocumentSnapshot, QuerySnapshot, where } from '@angular/fire/firestore';
+import { DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 
 import { RepositoryService } from './repository-service';
+import { Shop } from '../../core/interfaces/shop.interface';
 import { FireBaseId } from '../../core/types/firebase-id.type';
 import { Expense } from '../../core/interfaces/expense.interface';
-import { ExpensesFireBaseService } from '../data/expenses.service';
 import { ShopsFireBaseService } from '../data/shops-firebase.service';
-import { Shop } from '../../core/interfaces/shop.interface';
 
 @Injectable( {
     providedIn: 'root'

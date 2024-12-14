@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
+import { QuerySnapshot } from 'firebase/firestore';
 
 import { FireBaseId } from '../../core/types/firebase-id.type';
-import { QuerySnapshot } from 'firebase/firestore';
 
 export interface RepositoryService<T> {
     getAll( userId?: FireBaseId ): Observable<T[] | QuerySnapshot>;

@@ -6,19 +6,19 @@
   <div class="header__actions">
     <div class="header__user__photo__wrapper">
       @if (authService.currentGoogleUser()) {
-      <img
-        [src]="authService.currentGoogleUser()?.photoURL"
-        alt="user profile image"
-      />
+        <img
+          [src]="authService.currentGoogleUser()?.photoURL"
+          alt="user profile image"
+        />
       }
     </div>
 
     @if (!authService.currentGoogleUser()) {
-    <button class="header__sign-in-btn" (click)="signIn()">Увійти</button>
+      <button class="header__sign-in-btn" (click)="signIn()">Увійти</button>
     } @else {
-    <button class="header__logout-btn" (click)="logout()">
-      <img src="./icons/logout.svg" alt="logout" />
-    </button>
+      <button class="header__logout-btn" (click)="logout()">
+        <img src="./icons/logout.svg" alt="logout"/>
+      </button>
     }
   </div>
 </header>
