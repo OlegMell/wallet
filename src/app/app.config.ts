@@ -7,7 +7,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ApplicationConfig, isDevMode, provideZoneChangeDetection } from '@angular/core';
 
 import { routes } from './app.routes';
-import { firebaseConfig } from './core/firebase.config';
+import { firebaseConfig } from '../../firebase.config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
