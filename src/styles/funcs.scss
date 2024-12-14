@@ -1,0 +1,10 @@
+@use "sass:math";
+
+@function toRem($value) {
+  @if (math.is-unitless($value)) {
+    $remValue: math.div($value, 16) + rem;
+    @return $remValue;
+  } @else {
+    @error 'Provide value without unit!'
+  }
+}

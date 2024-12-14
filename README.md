@@ -1,4 +1,12 @@
-# BudGet
+# BudGet Wallet
+
+## Track your expenses effortlessly with our intuitive expense tracking app
+
+## Built with Angular & Firebase Auth, Database & Hosting
+
+
+
+# Deployment
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.0.
 
