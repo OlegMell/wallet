@@ -1,7 +1,8 @@
 @import "./../../../styles.scss";
+@import "./../../../styles/funcs.scss";
 
 .main {
-  border-radius: 30px;
+  border-radius: 10px;
   width: max-content;
   margin-inline: auto;
   padding: 20px;
@@ -21,9 +22,9 @@
 
   &__header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
   }
 
   &__expenses-for {
@@ -38,7 +39,8 @@
     font-size: toRem(40);
     width: 50px;
     height: 50px;
-    @include backgroundPrimaryColor(0.6);
+    // @include backgroundPrimaryColor(0.6);
+    background-color: rgba($color: white, $alpha: .8);
     cursor: pointer;
     @include button-hover;
     padding: 0;
@@ -99,6 +101,6 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-  background-color: rgba($color: whitesmoke, $alpha: 0.5);
-  filter: blur(5px);
+  // background-color: rgba($color: whitesmoke, $alpha: 0.2);
+  // filter: blur(5px);
 }

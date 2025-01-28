@@ -1,7 +1,7 @@
 @import "../../../styles.scss";
 
 .header {
-  @include backgroundPrimaryColor(0.5);
+  background-color: var(--primary-bg);
   padding: 10px;
   display: flex;
   align-items: center;

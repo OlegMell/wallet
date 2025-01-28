@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: white;
+  background-color: rgba(black, .9);
   border-radius: 6px;
 
   @media screen and (max-width: 400px) {
@@ -43,7 +43,7 @@
   }
 
   &.weekend:not(:hover):not(.another-month) {
-    background-color: rgba(blue, 0.08);
+    background-color: rgba(red, 0.20);
   }
 
   &.another-month {
