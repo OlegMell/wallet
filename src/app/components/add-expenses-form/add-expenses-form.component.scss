@@ -33,8 +33,12 @@
         padding: 10px;
         font-size: toRem(18);
         border: 1px solid rgba($color: #000000, $alpha: 0.2);
-        // background-color: rgba($color: white, $alpha: 0.5);
         background-color: var(--panel-bg);
+      }
+
+      select>option {
+        background: black;
+        color: var(--white);
       }
     }
 
@@ -71,9 +75,4 @@
       height: auto;
     }
   }
-}
-
-select>option {
-  background: black;
-  color: var(--white);
 }

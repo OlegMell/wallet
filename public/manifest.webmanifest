@@ -1,8 +1,8 @@
 {
   "name": "bud-get",
   "short_name": "bud-get",
-  "theme_color": "#ff7f50",
-  "background_color": "#ff7f50",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

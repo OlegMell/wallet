@@ -6,8 +6,16 @@
   --primary: rgb(79, 70, 185);
   --primary-bg: black;
   --white: whitesmoke;
+  --color: whitesmoke;
   --panel-bg: rgba(255, 255, 255, .1);
   --border-purple: rgba(79, 70, 186, 0.5);
+
+  @media (prefers-color-scheme: light) {
+    --primary-bg: white;
+    --white: black;
+    --color: black;
+    --panel-bg: rgba(0, 0, 0, .05);
+  }
 }
 
 * {

@@ -16,7 +16,7 @@
 
   &__title {
     font-size: toRem(35);
-    color: rgba($color: whitesmoke, $alpha: 0.85);
+    color: var(--color);
   }
 
   &__user__photo__wrapper {
